@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">AC_Robot</string>
+    <string name="noCamera">No Camera</string>
+    <string name="prefs_camera_topic_edittext_key">prefs_camera_topic_edittext</string>
+
+    <!-- 添加新的人脸识别素材 -->
+    <string name="add_face">采集人脸</string>
+    <string name="camera_topic_face_recognition_realtime">/camera/rgb/image_color</string>
+    <!-- 处理前的视频图像 -->
+    <string name="camera_face_recognition_origin">原始图像</string>
+    <string name="camera_topic_face_recognition_origin">/camera/rgb/image_color/compressed</string>
+    <!-- 处理后的视频图像 -->
+    <string name="camera_face_recognition_handled">人脸检测结果</string>
+    <string name="camera_topic_face_recognition_handled">/webcam/image_raw</string>
+    <!-- 处理前的视频图像 -->
+    <string name="camera_face_detection_origin">原始图像</string>
+    <string name="camera_topic_face_detection_origin">/camera/rgb/image_color/compressed</string>
+    <!-- 处理后的视频图像 -->
+    <string name="camera_face_detection_handled">人脸检测结果</string>
+    <string name="camera_topic_face_detection_handled">/webcam/image_raw</string>
+    <!-- Robot chooser strings -->
+    <string name="add_robot">Add Robot</string>
+    <string name="edit_robot">Edit Robot</string>
+    <string name="add_edit_robot">Add/Edit Robot</string>
+    <string name="robot_name_hint">Robot Name</string>
+    <string name="chooser_uri_hint">Master URI</string>
+    <string name="no_robots">No Robots. Add a new one!</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

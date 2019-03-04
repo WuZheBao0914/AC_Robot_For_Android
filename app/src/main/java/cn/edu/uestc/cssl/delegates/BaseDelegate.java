@@ -12,7 +12,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
  * @author xuyang
- * @create 2019/1/22 10:12
+ * @create on 2019/1/22 10:12
  **/
 public abstract class BaseDelegate extends SwipeBackFragment {
 

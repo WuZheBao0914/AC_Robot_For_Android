@@ -1,4 +1,4 @@
-package cn.edu.uestc.cssl.fragments;
+package cn.edu.uestc.cssl.delegates;
 
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
@@ -32,7 +32,7 @@ public abstract class RosFragment extends SimpleFragment {
     /**
      * Called when the Fragment is shutdown.
      */
-    abstract void shutdown();
+    public abstract void shutdown();
 
     /**
      * Called when the Fragment is initialized.

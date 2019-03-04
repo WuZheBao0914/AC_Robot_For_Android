@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_robot"
+            android:showAsAction="withText|ifRoom"
+            android:title="@string/action_choose_robot"
+            tools:ignore="AppCompatResource" />
+        <item
+            android:id="@+id/action_help"
+            android:showAsAction="withText|ifRoom"
+            android:title="@string/action_help"
+            tools:ignore="AppCompatResource" />
+        <item
+            android:id="@+id/action_about"
+            android:showAsAction="withText|ifRoom"
+            android:title="@string/action_about"
+            tools:ignore="AppCompatResource" />
+    </group>
+</menu>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/media"
+        android:icon="@drawable/wifi_2"
+        android:title="媒资管理"/>
+    <item
+        android:id="@+id/upload"
+        android:icon="@drawable/wifi_1"
+        android:title="上传管理"/>
+    <item
+        android:id="@+id/shortcut"
+        android:icon="@drawable/wifi_0"
+        android:title="短视频"/>
+    <item android:title="全局设置">
+        <menu>
+            <item
+                android:id="@+id/splite"
+                android:icon="@drawable/wifi_3"
+                android:title="分类"/>
+            <item
+                android:id="@+id/system"
+                android:icon="@drawable/wifi_4"
+                android:title="设置"/>
+        </menu>
+
+
+    </item>
+
+
+</menu>

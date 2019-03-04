@@ -2,8 +2,8 @@ package cn.edu.uestc.cssl.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
-
 
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
@@ -11,6 +11,7 @@ import org.ros.node.NodeMainExecutor;
 import cn.edu.uestc.android_10.BitmapFromCompressedImage;
 import cn.edu.uestc.android_10.view.RosImageView;
 import cn.edu.uestc.cssl.activities.R;
+import cn.edu.uestc.cssl.delegates.RosFragment;
 import sensor_msgs.CompressedImage;
 
 /**
@@ -19,15 +20,22 @@ import sensor_msgs.CompressedImage;
  **/
 public class FaceDetectionFragment extends RosFragment {
 
+    private static final String TAG = "FaceDetectionFragment";
+
     private RosImageView<CompressedImage> cameraFaceDetectionOriginView;
     private RosImageView<sensor_msgs.CompressedImage> cameraFaceDetectionHandledView;
-
-
 
     public FaceDetectionFragment() {
     }
 
+    public static FaceDetectionFragment newInstance() {
 
+        Bundle args = new Bundle();
+
+        FaceDetectionFragment fragment = new FaceDetectionFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public Object setLayout() {
@@ -60,8 +68,12 @@ public class FaceDetectionFragment extends RosFragment {
     }
 
     @Override
-    void shutdown() {
-        nodeMainExecutor.shutdownNodeMain(cameraFaceDetectionOriginView);
-        nodeMainExecutor.shutdownNodeMain(cameraFaceDetectionHandledView);
+    public void shutdown() {
+        try {
+            nodeMainExecutor.shutdownNodeMain(cameraFaceDetectionOriginView);
+            nodeMainExecutor.shutdownNodeMain(cameraFaceDetectionHandledView);
+        } catch (Exception e) {
+            Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
+        }
     }
 }

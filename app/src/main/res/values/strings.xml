@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AC_Robot</string>
+    <string name="app_name">看护机器人</string>
     <string name="noCamera">No Camera</string>
     <string name="prefs_camera_topic_edittext_key">prefs_camera_topic_edittext</string>
 
@@ -19,15 +19,119 @@
     <string name="camera_face_detection_handled">人脸检测结果</string>
     <string name="camera_topic_face_detection_handled">/webcam/image_raw</string>
     <!-- Robot chooser strings -->
-    <string name="add_robot">Add Robot</string>
-    <string name="edit_robot">Edit Robot</string>
-    <string name="add_edit_robot">Add/Edit Robot</string>
-    <string name="robot_name_hint">Robot Name</string>
-    <string name="chooser_uri_hint">Master URI</string>
+    <string name="add_robot">添加机器人</string>
+    <string name="edit_robot">编辑机器人</string>
+    <string name="add_edit_robot">添加/编辑 机器人</string>
+    <string name="robot_name_hint">机器人名称</string>
+    <string name="chooser_uri_hint">机器人URI</string>
     <string name="no_robots">No Robots. Add a new one!</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">设置</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- Button strings -->
+    <string name="delete">Delete</string>
+    <string name="stop">STOP</string>
+    <string name="start">START</string>
+    <string name="center">Center View</string>
+    <string name="show_advanced_options">打开高级选项</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+
+
+    <!-- UI strings -->
+    <string name="percent_string">%1$d%%</string>
+    <string name="speed_string">%1$5.2f m/s</string>
+    <string name="turnrate_string">%1$5.2f \u00B0/s</string>
+    <string name="location_string">(%1$14s, %2$14s)</string>
+    <string name="map_clear_string">Clear</string>
+    <string name="map_lock_camera_string">Lock Camera Angle</string>
+    <string name="control_mode">Control Mode: </string>
+    <string name="robot_name">机器人名称:</string>
+    <string name="master_uri">机器人URI:</string>
+    <string name="joystick_topic_prompt">Joystick Topic:</string>
+    <string name="camera_topic_prompt">Camera Topic:</string>
+    <string name="laserscan_topic_prompt">Laser Scan Topic:</string>
+    <string name="navsat_topic_prompt">Nav Sat Topic:</string>
+    <string name="odometry_topic_prompt">Odometry Topic:</string>
+    <string name="pose_topic_prompt">Pose Topic:</string>
+
+
+    <!-- Preference titles -->
+    <string name="joy_pref_title">Joystick Topic</string>
+    <string name="laser_pref_title">Laser Scan Topic</string>
+    <string name="camera_pref_title">Image Topic</string>
+    <string name="navsat_pref_title">GPS Topic</string>
+    <string name="topic_pref_title">Topics</string>
+    <string name="warning_enable_pref_title">Enable Warning System</string>
+    <string name="pose_pref_title">Pose Topic</string>
+    <string name="odometry_pref_title">Odometry Topic</string>
+    <string name="laser_scan_detail_pref_title">Laser Scan Detail</string>
+    <string name="random_walk_range_minimum_pref_title">Random Walk Range Minimum</string>
+    <string name="warning_pref_title">Warning System</string>
+    <string name="warning_mindist_pref_title">Warning Distance</string>
+    <string name="warning_safemode_pref_title">Safe Mode</string>
+    <string name="warning_beep_pref_title">Warning Beeps</string>
+
+    <!-- Default Preference values -->
+    <string name="default_warning_mindist">3.0</string>
+    <string name="prefs_advanced_control_settings_key">prefs_advanced_control_settings</string>
+    <string name="prefs_advanced_control_settings_summary">Edit advanced control settings</string>
+    <string name="advanced_controls__pref_title">Advanced Controls</string>
+    <string name="reverse_angle_reading_summary_off"><![CDATA[Invert Angle Reading (Min->Max Angle)]]></string>
+    <string name="reverse_angle_reading_summary_on"><![CDATA[Invert Angle Reading (Max->Min Angle)]]></string>
+    <string name="reverse_angle_reading_title">Invert Laser Scan</string>
+    <string name="prefs_reverse_angle_reading_key">prefs_reverse_angle_reading_key</string>
+    <string name="prefs_invert_x_axis_key">prefs_invert_x_axis_key</string>
+    <string name="prefs_invert_angular_velocity_key">prefs_invert_angular_velocity_key</string>
+    <string name="invert_angular_velocity_summary">Invert angular velocity driving direction</string>
+    <string name="invert_x_axis_summary">Invert X-Axis driving direction</string>
+    <string name="invert_x_axis_title">Invert X-Axis</string>
+    <string name="invert_angular_velocity_title">Invert Angular Velocity</string>
+    <string name="invert_y_axis_title">Invert Y-Axis</string>
+    <string name="invert_y_axis_summary">Invert Y-axis driving direction</string>
+    <string name="prefs_invert_y_axis_key">prefs_invert_y_axis_key</string>
+    <string name="reverse_laser_scan_prompt">Invert Laser Scan:</string>
+    <string name="invert_x_axis_prompt">Invert X-axis:</string>
+    <string name="invert_y_axis_prompt">Invert Y-axis:</string>
+    <string name="invert_angular_velocity_prompt">Invert Ang. Vel:</string>
+
+
+    <!-- Drawer options -->
+    <string name="drawer_open">Open Menu</string>
+    <string name="drawer_close">Close Menu</string>
+    <string name="title_activity_robot_controller">RobotController</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--机器人控制菜单栏-->
+    <string name="action_info">基础信息</string>
+    <string name="action_map">地图构建</string>
+    <string name="action_track">追踪</string>
+    <string name="action_track_barycenter">质心追踪</string>
+    <string name="action_track_bones">骨骼追踪</string>
+    <string name="action_face">人脸 </string>
+    <string name="action_face_detection">人脸检测</string>
+    <string name="action_face_recognition">人脸识别</string>
+    <string name="action_emotion">情绪识别</string>
+    <string name="action_voice">语音识别</string>
+    <string name="action_system">系统</string>
+
+
+    <string name="action_choose_robot">选择机器人</string>
+    <string name="action_help">帮助</string>
+    <string name="setup">配置</string>
+    <string name="using">使用</string>
+    <string name="faq">问答</string>
+    <string name="action_about">关于</string>
+
+
+    <string name="press_again_exit">再按一次退出</string>
 </resources>

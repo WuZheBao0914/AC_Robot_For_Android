@@ -1,0 +1,65 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cn.edu.uestc.cssl.activities.RobotController">
+    <item
+        android:id="@+id/action_info"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_info"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/action_map"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_map"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/action_emotion"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_emotion"
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/action_voice"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_voice"
+        tools:ignore="AppCompatResource" />
+    <item android:title="@string/action_face">
+        <menu>
+            <item
+                android:id="@+id/action_face_detection"
+                android:showAsAction="withText|ifRoom"
+                android:title="@string/action_face_detection"
+                tools:ignore="AppCompatResource" />
+            <item
+                android:id="@+id/action_face_recognition"
+                android:showAsAction="withText|ifRoom"
+                android:title="@string/action_face_recognition"
+                tools:ignore="AppCompatResource" />
+        </menu>
+    </item>
+
+    <item android:title="@string/action_track">
+        <menu>
+            <item
+                android:id="@+id/action_track_barycenter"
+                android:showAsAction="withText|ifRoom"
+                android:title="@string/action_track_barycenter"
+                tools:ignore="AppCompatResource" />
+            <item
+                android:id="@+id/action_track_bones"
+                android:showAsAction="withText|ifRoom"
+                android:title="@string/action_track_bones"
+                tools:ignore="AppCompatResource" />
+        </menu>
+    </item>
+
+    <item android:title="@string/action_system">
+        <menu>
+            <item
+                android:id="@+id/action_settings"
+                android:orderInCategory="100"
+                android:showAsAction="never"
+                android:title="@string/action_settings"
+                tools:ignore="AppCompatResource" />
+        </menu>
+    </item>
+</menu>

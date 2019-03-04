@@ -1,11 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar"/>
+    <!--<style name="AppTheme" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        &lt;!&ndash; 如果需要导航栏也透明加下面这行代码 &ndash;&gt;
+        &lt;!&ndash;<item name="android:navigationBarColor">@android:color/transparent</item>&ndash;&gt;
+        <item name="android:windowTranslucentStatus">false</item>
+        &lt;!&ndash; 如果需要导航栏也透明加下面这行代码 &ndash;&gt;
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>-->
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="tab_appearance">
+        <item name="android:textSize">16sp</item>
     </style>
-
 </resources>

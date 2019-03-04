@@ -18,6 +18,7 @@ import cn.edu.uestc.ac_ui.icon.AcIcons;
 import cn.edu.uestc.android_10.BitmapFromCompressedImage;
 import cn.edu.uestc.android_10.view.RosImageView;
 import cn.edu.uestc.cssl.activities.R;
+import cn.edu.uestc.cssl.activities.RobotController;
 import cn.edu.uestc.cssl.delegates.RosFragment;
 import sensor_msgs.CompressedImage;
 
@@ -58,7 +59,10 @@ public class FaceRecognitionFragment extends RosFragment {
         switch (item.getItemId()) {
             case R.id.action_add_face:
                 // todo 如何开启节点
-                start(AddFaceForTrainingFragment.newInstance());
+                AddFaceForTrainingFragment addFaceForTrainingFragment
+                        = AddFaceForTrainingFragment.newInstance();
+                RobotController.initFragment(addFaceForTrainingFragment);
+                start(addFaceForTrainingFragment);
                 break;
         }
         return true;

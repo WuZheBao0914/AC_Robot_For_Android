@@ -51,6 +51,8 @@ public class RobotController extends AppCompatRosActivity implements
     //当前机器人信息
     public static RobotInfo ROBOT_INFO = null;
 
+    public static RobotController controller = null;
+
     /**
      * Notification ticker for the App
      */
@@ -94,12 +96,13 @@ public class RobotController extends AppCompatRosActivity implements
     private long lastUpdate = 0;
     private float last_x, last_y, last_z;
     private static final int SHAKE_THRESHOLD = 400;
-
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
 
+
     public RobotController() {
-        super(NOTIFICATION_TICKER, NOTIFICATION_TITLE, URI.create("http://192.168.1.108:11311"));
+        super(NOTIFICATION_TICKER, NOTIFICATION_TITLE, URI.create(ROBOT_INFO.getMasterUri()));
+        controller = this;
     }
 
     @Override
@@ -114,13 +117,25 @@ public class RobotController extends AppCompatRosActivity implements
                     NodeConfiguration.newPublic(local_network_address.getHostAddress(), getMasterUri());
 
             if (fragment != null) {
-                //初始化节点执行者  Todo 后面添加了新的功能该怎么搞
+                //初始化节点执行者
                 fragment.initialize(this.nodeMainExecutor, nodeConfiguration);
             }
 
         } catch (Exception e) {
             // Socket problem
             Log.e(TAG, "socket error trying to get networking information from the master uri", e);
+        }
+    }
+
+    /**
+     * 用于初始化启动的Fragment
+     *
+     * @param fragment
+     */
+    public static void initFragment(RosFragment fragment) {
+        if (fragment != null) {
+            //初始化节点执行者  Todo 后面添加了新的功能该怎么搞
+            fragment.initialize(controller.nodeMainExecutor, controller.nodeConfiguration);
         }
     }
 
@@ -166,6 +181,8 @@ public class RobotController extends AppCompatRosActivity implements
             fragments[EIGHTH] = TrackBonesFragment.newInstance();
             fragments[NINTH] = SettingFragment.newInstance();
         }
+
+
 
         mToolbar = findViewById(R.id.robot_controller_toolbar);
         subtitle = findViewById(R.id.subtitle);
@@ -311,9 +328,10 @@ public class RobotController extends AppCompatRosActivity implements
      */
     private void skip(int index, int resId) {
         fragment = fragments[index];
-        this.init();
+        //用于初始化fragment
+        initFragment(fragment);
         subtitle.setText(resId);
-        showHideFragment(fragments[index]);
+        showHideFragment(fragment);
     }
 
     //todo

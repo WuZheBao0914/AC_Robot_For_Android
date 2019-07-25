@@ -52,7 +52,7 @@ public class FaceDetectionFragment extends RosFragment {
 
         //处理后的图像
         cameraFaceDetectionHandledView = rootView.findViewById(R.id.camera_face_detection_handled);
-        cameraFaceDetectionHandledView.setTopicName(getString(R.string.camera_topic_face_detection_handled));
+        cameraFaceDetectionHandledView.setTopicName(getString(R.string.camera_topic_face_recognition_handled));
         cameraFaceDetectionHandledView.setMessageType(CompressedImage._TYPE);
         cameraFaceDetectionHandledView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
 

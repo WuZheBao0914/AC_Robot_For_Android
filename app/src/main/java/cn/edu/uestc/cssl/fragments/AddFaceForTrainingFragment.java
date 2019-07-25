@@ -14,7 +14,9 @@ import org.ros.node.NodeMainExecutor;
 import cn.edu.uestc.android_10.BitmapFromCompressedImage;
 import cn.edu.uestc.android_10.view.RosImageView;
 import cn.edu.uestc.cssl.activities.R;
+import cn.edu.uestc.cssl.activities.RobotController;
 import cn.edu.uestc.cssl.delegates.RosFragment;
+import cn.edu.uestc.cssl.util.Talker;
 import sensor_msgs.CompressedImage;
 
 /**
@@ -28,6 +30,7 @@ public class AddFaceForTrainingFragment extends RosFragment {
     private RosImageView<sensor_msgs.CompressedImage> kinectRealtimeImageView;
     private IconButton btnAddFace;
     private TextInputEditText textAddFace;
+    private Talker talker;
 
 
     public static AddFaceForTrainingFragment newInstance() {
@@ -46,6 +49,7 @@ public class AddFaceForTrainingFragment extends RosFragment {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        Log.i(TAG,"先执行界面初始化");
         kinectRealtimeImageView = rootView.findViewById(R.id.kinectRealtimeImageView);
         kinectRealtimeImageView.setTopicName(getString(R.string.camera_topic_face_recognition_realtime));
         kinectRealtimeImageView.setMessageType(CompressedImage._TYPE);
@@ -58,18 +62,25 @@ public class AddFaceForTrainingFragment extends RosFragment {
             @Override
             public void onClick(View view) {
                 String name = textAddFace.getText().toString();
-                if (name == null || name == "" || name.length() == 0) {
+                if ("".equals(name) || name.length() == 0) {
                     textAddFace.setError("姓名不能为空");
+                }else {
+                    talker.sendMessage(name);
                 }
             }
         });
+        talker = new Talker(getString(R.string.topicName_of_add_face_for_face_recognition),
+                getString(R.string.nodeName_of_add_face_for_face_recognition));
+        RobotController.initFragment(this);
     }
 
     @Override
     public void initialize(NodeMainExecutor nodeMainExecutor, NodeConfiguration nodeConfiguration) {
+        Log.i(TAG,"先执行初始化");
         super.initialize(nodeMainExecutor, nodeConfiguration);
         if (nodeConfiguration != null) {
             nodeMainExecutor.execute(kinectRealtimeImageView, nodeConfiguration.setNodeName("android/fragment_camera_view_before"));
+            nodeMainExecutor.execute(talker,nodeConfiguration.setNodeName(talker.getDefaultNodeName()));
         }
     }
 

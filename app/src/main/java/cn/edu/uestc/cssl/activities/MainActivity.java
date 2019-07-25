@@ -28,6 +28,7 @@ import cn.edu.uestc.cssl.delegates.AcDelegate;
 import cn.edu.uestc.cssl.fragments.AboutFragment;
 import cn.edu.uestc.cssl.fragments.HelpFragment;
 import cn.edu.uestc.cssl.fragments.RobotListFragment;
+import cn.edu.uestc.cssl.util.RobotStorage;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportHelper;
 
@@ -68,6 +69,8 @@ public class MainActivity extends SupportActivity implements
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontACModule())
                 .configure();
+        // 加载机器人信息
+        RobotStorage.load(this);
 
         setContentView(R.layout.activity_robot_chooser);
 

@@ -2,10 +2,17 @@ package cn.edu.uestc.cssl.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
+import org.ros.node.NodeConfiguration;
+import org.ros.node.NodeMainExecutor;
+
+import cn.edu.uestc.android_10.BitmapFromCompressedImage;
+import cn.edu.uestc.android_10.view.RosImageView;
 import cn.edu.uestc.cssl.activities.R;
 import cn.edu.uestc.cssl.delegates.RosFragment;
+import sensor_msgs.CompressedImage;
 
 /*
  *@author xuyang
@@ -13,6 +20,11 @@ import cn.edu.uestc.cssl.delegates.RosFragment;
  *@description 情绪识别Fragment
  */
 public class EmotionRecognitionFragment extends RosFragment {
+
+    private static final String TAG = "EmotionRecognitionFragm";
+
+    private RosImageView<CompressedImage> cameraExpressionRecognitionOriginView;
+    private RosImageView<sensor_msgs.CompressedImage> cameraExpressionRecognitionHandledView;
 
     public static EmotionRecognitionFragment newInstance() {
 
@@ -30,11 +42,35 @@ public class EmotionRecognitionFragment extends RosFragment {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        //未处理的图像
+        cameraExpressionRecognitionOriginView = rootView.findViewById(R.id.camera_face_detection_origin);
+        cameraExpressionRecognitionOriginView.setTopicName(getString(R.string.camera_topic_face_detection_origin));
+        cameraExpressionRecognitionOriginView.setMessageType(CompressedImage._TYPE);
+        cameraExpressionRecognitionOriginView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
 
+        //处理后的图像
+        cameraExpressionRecognitionHandledView = rootView.findViewById(R.id.camera_expression_recognition_handled);
+        cameraExpressionRecognitionHandledView.setTopicName(getString(R.string.camera_topic_expression_recognition_handled));
+        cameraExpressionRecognitionHandledView.setMessageType(CompressedImage._TYPE);
+        cameraExpressionRecognitionHandledView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+    }
+
+    @Override
+    public void initialize(NodeMainExecutor nodeMainExecutor, NodeConfiguration nodeConfiguration) {
+        super.initialize(nodeMainExecutor, nodeConfiguration);
+        if (nodeConfiguration != null) {
+            nodeMainExecutor.execute(cameraExpressionRecognitionOriginView, nodeConfiguration.setNodeName("android/fragment_camera_view_before"));
+            nodeMainExecutor.execute(cameraExpressionRecognitionHandledView, nodeConfiguration.setNodeName("android/fragment_camera_view_after"));
+        }
     }
 
     @Override
     public void shutdown() {
-
+        try {
+            nodeMainExecutor.shutdownNodeMain(cameraExpressionRecognitionOriginView);
+            nodeMainExecutor.shutdownNodeMain(cameraExpressionRecognitionHandledView);
+        } catch (Exception e) {
+            Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
+        }
     }
 }

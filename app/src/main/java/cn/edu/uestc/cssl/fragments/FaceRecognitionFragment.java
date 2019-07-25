@@ -61,8 +61,8 @@ public class FaceRecognitionFragment extends RosFragment {
                 // todo 如何开启节点
                 AddFaceForTrainingFragment addFaceForTrainingFragment
                         = AddFaceForTrainingFragment.newInstance();
-                RobotController.initFragment(addFaceForTrainingFragment);
                 start(addFaceForTrainingFragment);
+
                 break;
         }
         return true;
@@ -85,7 +85,7 @@ public class FaceRecognitionFragment extends RosFragment {
 
         //处理后的图像
         cameraFaceRecognitionHandledView = rootView.findViewById(R.id.camera_face_recognition_handled);
-        cameraFaceRecognitionHandledView.setTopicName(getString(R.string.camera_topic_face_detection_handled));
+        cameraFaceRecognitionHandledView.setTopicName(getString(R.string.camera_topic_face_recognition_handled));
         cameraFaceRecognitionHandledView.setMessageType(CompressedImage._TYPE);
         cameraFaceRecognitionHandledView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
     }

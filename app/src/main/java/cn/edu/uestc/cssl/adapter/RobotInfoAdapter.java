@@ -295,7 +295,7 @@ public class RobotInfoAdapter extends RecyclerView.Adapter<RobotInfoAdapter.View
                     try {
 
                         //todo 方便开发取消了"!"
-                        if (isPortOpen(INFO.getUri().getHost(), INFO.getUri().getPort(), 10000)) {
+                        if (!isPortOpen(INFO.getUri().getHost(), INFO.getUri().getPort(), 10000)) {
                             throw new Exception("Cannot connect to ROS. Please make sure ROS is running and that the Master URI is correct.");
                         }
 

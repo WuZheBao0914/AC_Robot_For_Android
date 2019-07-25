@@ -195,7 +195,6 @@ public class RobotController extends AppCompatRosActivity implements
         toggle = new ActionBarDrawerToggle(
                 this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
-        toggle.syncState();
 
         //同步抽屉的指示器状态，只有加这一句抽屉的开关才会改变Toolbar上的NavigationIcon图标
         toggle.syncState();

@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-    <application xmlns:tools="http://schemas.android.com/tools"
+    <application
         android:allowBackup="true"
         android:icon="@drawable/app_log"
         android:label="@string/app_name"
@@ -32,7 +32,7 @@
         -->
         <activity
             android:name=".RobotController"
-            android:label="@string/title_activity_robot_controller"></activity>
+            android:label="@string/title_activity_robot_controller"/>
     </application>
 
 </manifest>

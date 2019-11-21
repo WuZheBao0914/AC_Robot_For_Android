@@ -35,6 +35,7 @@ import cn.edu.uestc.cssl.fragments.EmotionRecognitionFragment;
 import cn.edu.uestc.cssl.fragments.FaceDetectionFragment;
 import cn.edu.uestc.cssl.fragments.FaceRecognitionFragment;
 import cn.edu.uestc.cssl.fragments.MapBuildFragment;
+import cn.edu.uestc.cssl.fragments.PoseEstimationFragment;
 import cn.edu.uestc.cssl.fragments.SettingFragment;
 import cn.edu.uestc.cssl.fragments.TrackBarycenterFragment;
 import cn.edu.uestc.cssl.fragments.TrackBonesFragment;
@@ -51,7 +52,7 @@ public class RobotController extends AppCompatRosActivity implements
     //当前机器人信息
     public static RobotInfo ROBOT_INFO = null;
 
-    public static RobotController controller = null;
+    public static  RobotController controller;
 
     /**
      * Notification ticker for the App
@@ -77,7 +78,8 @@ public class RobotController extends AppCompatRosActivity implements
     public static final int SEVENTH = 6;
     public static final int EIGHTH = 7;
     public static final int NINTH = 8;
-    private RosFragment[] fragments = new RosFragment[9];
+    public static final int TENTH = 9;
+    private RosFragment[] fragments = new RosFragment[10];
     private RosFragment fragment = null;
 
 
@@ -102,7 +104,7 @@ public class RobotController extends AppCompatRosActivity implements
 
     public RobotController() {
         super(NOTIFICATION_TICKER, NOTIFICATION_TITLE, URI.create(ROBOT_INFO.getMasterUri()));
-        controller = this;
+         controller = this;
     }
 
     @Override
@@ -152,9 +154,10 @@ public class RobotController extends AppCompatRosActivity implements
             fragments[FOURTH] = VoiceRecognitionFragment.newInstance();
             fragments[FIFTH] = FaceDetectionFragment.newInstance();
             fragments[SIXTH] = FaceRecognitionFragment.newInstance();
-            fragments[SEVENTH] = TrackBarycenterFragment.newInstance();
-            fragments[EIGHTH] = TrackBonesFragment.newInstance();
-            fragments[NINTH] = SettingFragment.newInstance();
+            fragments[SEVENTH] = PoseEstimationFragment.newInstance();
+            fragments[EIGHTH] = TrackBarycenterFragment.newInstance();
+            fragments[NINTH] = TrackBonesFragment.newInstance();
+            fragments[TENTH] = SettingFragment.newInstance();
 
             loadMultipleRootFragment(R.id.container, FIRST,
                     fragments[FIRST],
@@ -165,7 +168,8 @@ public class RobotController extends AppCompatRosActivity implements
                     fragments[SIXTH],
                     fragments[SEVENTH],
                     fragments[EIGHTH],
-                    fragments[NINTH]);
+                    fragments[NINTH],
+                    fragments[TENTH]);
             fragment = fragments[FIRST];
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
@@ -177,11 +181,11 @@ public class RobotController extends AppCompatRosActivity implements
             fragments[FOURTH] = VoiceRecognitionFragment.newInstance();
             fragments[FIFTH] = FaceDetectionFragment.newInstance();
             fragments[SIXTH] = FaceRecognitionFragment.newInstance();
-            fragments[SEVENTH] = TrackBarycenterFragment.newInstance();
-            fragments[EIGHTH] = TrackBonesFragment.newInstance();
-            fragments[NINTH] = SettingFragment.newInstance();
+            fragments[SEVENTH] = PoseEstimationFragment.newInstance();
+            fragments[EIGHTH] = TrackBarycenterFragment.newInstance();
+            fragments[NINTH] = TrackBonesFragment.newInstance();
+            fragments[TENTH] = SettingFragment.newInstance();
         }
-
 
 
         mToolbar = findViewById(R.id.robot_controller_toolbar);
@@ -203,12 +207,10 @@ public class RobotController extends AppCompatRosActivity implements
         //添加抽屉监听者，该监听者内部控制了ActionBar的NavigationIcon图标按钮
         mDrawer.addDrawerListener(toggle);
 
-        mDrawer.post(new Runnable() {
-            @Override
-            public void run() {
-                //两者状态同步
-                toggle.syncState();
-            }
+        mDrawer.post(() -> {
+            //两者状态同步
+            toggle.syncState();
+
         });
 
         mNavigationView = findViewById(R.id.navigationView);
@@ -222,6 +224,11 @@ public class RobotController extends AppCompatRosActivity implements
                         .actionBarSize());
         mNavigationView.getMenu().findItem(R.id.action_face_recognition).setIcon(
                 new IconDrawable(this, AcIcons.icon_face_recognition)
+                        .color(Color.BLACK)
+                        .actionBarSize());
+        // todo 换成姿态估计的图标
+        mNavigationView.getMenu().findItem(R.id.action_pose).setIcon(
+                new IconDrawable(this, AcIcons.icon_track_bones)
                         .color(Color.BLACK)
                         .actionBarSize());
         mNavigationView.getMenu().findItem(R.id.action_info).setIcon(
@@ -303,14 +310,17 @@ public class RobotController extends AppCompatRosActivity implements
             case R.id.action_face_recognition:
                 skip(SIXTH, R.string.action_face_recognition);
                 break;
+            case R.id.action_pose:
+                skip(SEVENTH, R.string.action_pose);
+                break;
             case R.id.action_track_barycenter:
-                skip(SEVENTH, R.string.action_track_barycenter);
+                skip(EIGHTH, R.string.action_track_barycenter);
                 break;
             case R.id.action_track_bones:
-                skip(EIGHTH, R.string.action_track_bones);
+                skip(NINTH, R.string.action_track_bones);
                 break;
             case R.id.action_settings:
-                skip(NINTH, R.string.action_settings);
+                skip(TENTH, R.string.action_settings);
                 break;
             default:
                 skip(FIRST, R.string.action_info);

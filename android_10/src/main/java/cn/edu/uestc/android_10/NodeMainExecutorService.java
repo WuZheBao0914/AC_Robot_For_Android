@@ -36,6 +36,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 import org.ros.RosCore;
@@ -182,12 +183,13 @@ public class NodeMainExecutorService extends Service implements NodeMainExecutor
       if (intent.getAction().equals("org.ros.android.ACTION_START_NODE_RUNNER_SERVICE")) {
         Preconditions.checkArgument(intent.hasExtra("org.ros.android.EXTRA_NOTIFICATION_TICKER"));
         Preconditions.checkArgument(intent.hasExtra("org.ros.android.EXTRA_NOTIFICATION_TITLE"));
-        android.support.v7.app.NotificationCompat.Builder builder = new android.support.v7.app.NotificationCompat.Builder(this);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         Intent notificationIntent = new Intent(this, NodeMainExecutorService.class);
         notificationIntent.setAction("org.ros.android.ACTION_SHUTDOWN_NODE_RUNNER_SERVICE");
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, notificationIntent, 0);
-        Notification notification = builder.setContentIntent(pendingIntent).setSmallIcon(R.mipmap.icon).setTicker(intent.getStringExtra("org.ros.android.EXTRA_NOTIFICATION_TICKER")).setWhen(System.currentTimeMillis()).setContentTitle(intent.getStringExtra("org.ros.android.EXTRA_NOTIFICATION_TITLE")).setAutoCancel(true).setContentText("Tap to shutdown.").build();
-        this.startForeground(1, notification);
+        // todo  屏蔽掉前台通知
+//        Notification notification = builder.setContentIntent(pendingIntent).setSmallIcon(R.mipmap.icon).setTicker(intent.getStringExtra("org.ros.android.EXTRA_NOTIFICATION_TICKER")).setWhen(System.currentTimeMillis()).setContentTitle(intent.getStringExtra("org.ros.android.EXTRA_NOTIFICATION_TITLE")).setAutoCancel(true).setContentText("Tap to shutdown.").build();
+//        this.startForeground(1, notification);
       }
 
       if (intent.getAction().equals("org.ros.android.ACTION_SHUTDOWN_NODE_RUNNER_SERVICE")) {

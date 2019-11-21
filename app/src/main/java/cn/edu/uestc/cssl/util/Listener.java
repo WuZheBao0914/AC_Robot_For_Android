@@ -7,22 +7,29 @@ import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Subscriber;
 
-import std_msgs.String;
-
 public class Listener extends AbstractNodeMain {
-    public Listener() {
+    private String topicName;
+    private String nodeName;
+    private MessageReceiver messageReceiver;
+
+    public Listener(java.lang.String topicName, java.lang.String nodeName,
+                    MessageReceiver messageReceiver) {
+        this.topicName = topicName;
+        this.nodeName = nodeName;
+        this.messageReceiver = messageReceiver;
     }
 
     public GraphName getDefaultNodeName() {
-        return GraphName.of("rosjava_tutorial_pubsub/listener");
+        return GraphName.of(this.nodeName);
     }
 
     public void onStart(ConnectedNode connectedNode) {
         final Log log = connectedNode.getLog();
-        Subscriber<String> subscriber = connectedNode.newSubscriber("chatter", "std_msgs/String");
-        subscriber.addMessageListener(new MessageListener<String>() {
-            public void onNewMessage(String message) {
+        Subscriber<std_msgs.String> subscriber = connectedNode.newSubscriber(this.nodeName, "std_msgs.String");
+        subscriber.addMessageListener(new MessageListener<std_msgs.String>() {
+            public void onNewMessage(std_msgs.String message) {
                 log.info("I heard: \"" + message.getData() + "\"");
+                messageReceiver.showMessage(message.getData());
             }
         });
     }

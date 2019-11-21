@@ -22,6 +22,11 @@
         android:showAsAction="withText|ifRoom"
         android:title="@string/action_voice"
         tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/action_pose"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_pose"
+        tools:ignore="AppCompatResource" />
     <item android:title="@string/action_face">
         <menu>
             <item

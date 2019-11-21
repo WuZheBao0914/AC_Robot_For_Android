@@ -23,7 +23,8 @@ public enum AcIcons implements Icon {
     icon_robot3('\ue67b'),
     icon_about('\ue60f'),
     icon_add('\ue620'),
-    icon_help('\ue600'),;
+    icon_help('\ue600'),
+    icon_pose('\ue6c1');
 
     private char character;
 

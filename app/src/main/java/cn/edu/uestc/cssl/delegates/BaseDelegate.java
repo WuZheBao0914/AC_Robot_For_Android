@@ -37,7 +37,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
             onBindView(savedInstanceState, rootView);
         }
 
-        return rootView;
+        return attachToSwipeBack(rootView);
     }
 
     @Override

@@ -24,6 +24,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import cn.edu.uestc.ac_core.app.AcRobot;
 import cn.edu.uestc.ac_ui.icon.AcIcons;
 import cn.edu.uestc.ac_ui.icon.FontACModule;
+import cn.edu.uestc.ac_ui.icon.FontACModule1;
 import cn.edu.uestc.cssl.delegates.AcDelegate;
 import cn.edu.uestc.cssl.fragments.AboutFragment;
 import cn.edu.uestc.cssl.fragments.HelpFragment;
@@ -68,6 +69,7 @@ public class MainActivity extends SupportActivity implements
         AcRobot.init(this)
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontACModule())
+                .withIcon(new FontACModule1())
                 .configure();
         // 加载机器人信息
         RobotStorage.load(this);

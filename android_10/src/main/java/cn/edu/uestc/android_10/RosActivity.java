@@ -33,7 +33,7 @@ public abstract class RosActivity extends SupportActivity {
     private RosActivity.OnActivityResultCallback onActivityResultCallback;
 
     protected RosActivity(String notificationTicker, String notificationTitle) {
-        this(notificationTicker, notificationTitle, (URI) null);
+        this(notificationTicker, notificationTitle, null);
     }
 
     protected RosActivity(String notificationTicker, String notificationTitle, URI customMasterUri) {

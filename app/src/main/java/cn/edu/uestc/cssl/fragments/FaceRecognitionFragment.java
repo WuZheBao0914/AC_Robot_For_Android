@@ -30,8 +30,8 @@ public class FaceRecognitionFragment extends RosFragment {
 
     private static final String TAG = "FaceRecognitionFragment";
 
-    private RosImageView<sensor_msgs.CompressedImage> cameraFaceRecognitionOriginView;
-    private RosImageView<sensor_msgs.CompressedImage> cameraFaceRecognitionHandledView;
+    private RosImageView<sensor_msgs.CompressedImage> cameraFaceRecognitionOriginView = null;
+    private RosImageView<sensor_msgs.CompressedImage> cameraFaceRecognitionHandledView = null;
 
 
     public static FaceRecognitionFragment newInstance() {
@@ -76,36 +76,42 @@ public class FaceRecognitionFragment extends RosFragment {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         setHasOptionsMenu(true);
+        if (cameraFaceRecognitionOriginView == null && cameraFaceRecognitionHandledView == null) {
+            //未处理的图像
+            cameraFaceRecognitionOriginView = rootView.findViewById(R.id.camera_face_recognition_origin);
+            cameraFaceRecognitionOriginView.setTopicName(getString(R.string.camera_topic_face_detection_origin));
+            cameraFaceRecognitionOriginView.setMessageType(CompressedImage._TYPE);
+            cameraFaceRecognitionOriginView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
 
-        //未处理的图像
-        cameraFaceRecognitionOriginView = rootView.findViewById(R.id.camera_face_recognition_origin);
-        cameraFaceRecognitionOriginView.setTopicName(getString(R.string.camera_topic_face_detection_origin));
-        cameraFaceRecognitionOriginView.setMessageType(CompressedImage._TYPE);
-        cameraFaceRecognitionOriginView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
-
-        //处理后的图像
-        cameraFaceRecognitionHandledView = rootView.findViewById(R.id.camera_face_recognition_handled);
-        cameraFaceRecognitionHandledView.setTopicName(getString(R.string.camera_topic_face_recognition_handled));
-        cameraFaceRecognitionHandledView.setMessageType(CompressedImage._TYPE);
-        cameraFaceRecognitionHandledView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+            //处理后的图像
+            cameraFaceRecognitionHandledView = rootView.findViewById(R.id.camera_face_recognition_handled);
+            cameraFaceRecognitionHandledView.setTopicName(getString(R.string.camera_topic_face_recognition_handled));
+            cameraFaceRecognitionHandledView.setMessageType(CompressedImage._TYPE);
+            cameraFaceRecognitionHandledView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+        }
     }
 
     @Override
     public void initialize(NodeMainExecutor nodeMainExecutor, NodeConfiguration nodeConfiguration) {
-        super.initialize(nodeMainExecutor, nodeConfiguration);
-        if (nodeConfiguration != null) {
+
+        if (nodeConfiguration != null && !isInitialized()) {
+            super.initialize(nodeMainExecutor, nodeConfiguration);
             nodeMainExecutor.execute(cameraFaceRecognitionOriginView, nodeConfiguration.setNodeName("android/fragment_camera_view_before"));
             nodeMainExecutor.execute(cameraFaceRecognitionHandledView, nodeConfiguration.setNodeName("android/fragment_camera_view_after"));
+            setInitialized(true);
         }
     }
 
     @Override
     public void shutdown() {
-        try {
-            nodeMainExecutor.shutdownNodeMain(cameraFaceRecognitionOriginView);
-            nodeMainExecutor.shutdownNodeMain(cameraFaceRecognitionHandledView);
-        } catch (Exception e) {
-            Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
+        if (isInitialized()) {
+            try {
+                nodeMainExecutor.shutdownNodeMain(cameraFaceRecognitionOriginView);
+                nodeMainExecutor.shutdownNodeMain(cameraFaceRecognitionHandledView);
+                setInitialized(false);
+            } catch (Exception e) {
+                Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
+            }
         }
     }
 }

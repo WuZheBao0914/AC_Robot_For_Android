@@ -33,7 +33,7 @@ public class AddFaceForTrainingFragment extends RosFragment implements MessageRe
 
     private static final String TAG = "FaceForTrainingFragment";
     private View view;
-    private RosImageView<sensor_msgs.CompressedImage> kinectRealtimeImageView;
+    private RosImageView<sensor_msgs.CompressedImage> kinectRealtimeImageView = null;
     private IconButton btnAddFace;
     private TextInputEditText textAddFace;
     private Talker talker;
@@ -90,21 +90,24 @@ public class AddFaceForTrainingFragment extends RosFragment implements MessageRe
 
     @Override
     public void initialize(NodeMainExecutor nodeMainExecutor, NodeConfiguration nodeConfiguration) {
-        Log.i(TAG, "先执行初始化");
-        super.initialize(nodeMainExecutor, nodeConfiguration);
-        if (nodeConfiguration != null) {
+        if (nodeConfiguration != null && !isInitialized()) {
+            super.initialize(nodeMainExecutor, nodeConfiguration);
             nodeMainExecutor.execute(kinectRealtimeImageView, nodeConfiguration.setNodeName("android/fragment_camera_view_before"));
             nodeMainExecutor.execute(talker, nodeConfiguration.setNodeName(talker.getDefaultNodeName()));
             nodeMainExecutor.execute(listener, nodeConfiguration.setNodeName(listener.getDefaultNodeName()));
+            setInitialized(true);
         }
     }
 
     @Override
     public void shutdown() {
-        try {
-            nodeMainExecutor.shutdownNodeMain(kinectRealtimeImageView);
-        } catch (NullPointerException e) {
-            Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
+        if (isInitialized()) {
+            try {
+                nodeMainExecutor.shutdownNodeMain(kinectRealtimeImageView);
+                setInitialized(false);
+            } catch (NullPointerException e) {
+                Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
+            }
         }
     }
 
@@ -129,7 +132,5 @@ public class AddFaceForTrainingFragment extends RosFragment implements MessageRe
             tipDialog.show();
             view.postDelayed(tipDialog::dismiss, 1500);
         }
-
-
     }
 }

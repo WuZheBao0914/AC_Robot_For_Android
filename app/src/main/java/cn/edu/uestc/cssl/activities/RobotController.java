@@ -52,7 +52,7 @@ public class RobotController extends AppCompatRosActivity implements
     //当前机器人信息
     public static RobotInfo ROBOT_INFO = null;
 
-    public static  RobotController controller;
+    public static RobotController controller;
 
     /**
      * Notification ticker for the App
@@ -104,7 +104,7 @@ public class RobotController extends AppCompatRosActivity implements
 
     public RobotController() {
         super(NOTIFICATION_TICKER, NOTIFICATION_TITLE, URI.create(ROBOT_INFO.getMasterUri()));
-         controller = this;
+        controller = this;
     }
 
     @Override
@@ -336,11 +336,23 @@ public class RobotController extends AppCompatRosActivity implements
      * @param resId
      */
     private void skip(int index, int resId) {
+        // shutdown当前fragment
+        if (fragment.isInitialized()) {
+            // 异步关闭，增加流畅度
+            synchronized (this) {
+                RosFragment temp = fragment;
+                new Thread(temp::shutdown).start();
+            }
+        }
+
         fragment = fragments[index];
+
         //用于初始化fragment
         initFragment(fragment);
         subtitle.setText(resId);
+
         showHideFragment(fragment);
+
     }
 
     //todo

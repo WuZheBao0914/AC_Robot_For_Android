@@ -23,8 +23,8 @@ public class EmotionRecognitionFragment extends RosFragment {
 
     private static final String TAG = "EmotionRecognitionFragm";
 
-    private RosImageView<CompressedImage> cameraExpressionRecognitionOriginView;
-    private RosImageView<sensor_msgs.CompressedImage> cameraExpressionRecognitionHandledView;
+    private RosImageView<CompressedImage> cameraExpressionRecognitionOriginView = null;
+    private RosImageView<sensor_msgs.CompressedImage> cameraExpressionRecognitionHandledView = null;
 
     public static EmotionRecognitionFragment newInstance() {
 
@@ -42,35 +42,42 @@ public class EmotionRecognitionFragment extends RosFragment {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        //未处理的图像
-        cameraExpressionRecognitionOriginView = rootView.findViewById(R.id.camera_face_detection_origin);
-        cameraExpressionRecognitionOriginView.setTopicName(getString(R.string.camera_topic_face_detection_origin));
-        cameraExpressionRecognitionOriginView.setMessageType(CompressedImage._TYPE);
-        cameraExpressionRecognitionOriginView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+        if (cameraExpressionRecognitionOriginView == null && cameraExpressionRecognitionHandledView == null) {
+            //未处理的图像
+            cameraExpressionRecognitionOriginView = rootView.findViewById(R.id.camera_face_detection_origin);
+            cameraExpressionRecognitionOriginView.setTopicName(getString(R.string.camera_topic_face_detection_origin));
+            cameraExpressionRecognitionOriginView.setMessageType(CompressedImage._TYPE);
+            cameraExpressionRecognitionOriginView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
 
-        //处理后的图像
-        cameraExpressionRecognitionHandledView = rootView.findViewById(R.id.camera_expression_recognition_handled);
-        cameraExpressionRecognitionHandledView.setTopicName(getString(R.string.camera_topic_expression_recognition_handled));
-        cameraExpressionRecognitionHandledView.setMessageType(CompressedImage._TYPE);
-        cameraExpressionRecognitionHandledView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+            //处理后的图像
+            cameraExpressionRecognitionHandledView = rootView.findViewById(R.id.camera_expression_recognition_handled);
+            cameraExpressionRecognitionHandledView.setTopicName(getString(R.string.camera_topic_expression_recognition_handled));
+            cameraExpressionRecognitionHandledView.setMessageType(CompressedImage._TYPE);
+            cameraExpressionRecognitionHandledView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+        }
     }
 
     @Override
     public void initialize(NodeMainExecutor nodeMainExecutor, NodeConfiguration nodeConfiguration) {
-        super.initialize(nodeMainExecutor, nodeConfiguration);
-        if (nodeConfiguration != null) {
+
+        if (nodeConfiguration != null && !isInitialized()) {
+            super.initialize(nodeMainExecutor, nodeConfiguration);
             nodeMainExecutor.execute(cameraExpressionRecognitionOriginView, nodeConfiguration.setNodeName("android/fragment_camera_view_before"));
             nodeMainExecutor.execute(cameraExpressionRecognitionHandledView, nodeConfiguration.setNodeName("android/fragment_camera_view_after"));
+            setInitialized(true);
         }
     }
 
     @Override
     public void shutdown() {
-        try {
-            nodeMainExecutor.shutdownNodeMain(cameraExpressionRecognitionOriginView);
-            nodeMainExecutor.shutdownNodeMain(cameraExpressionRecognitionHandledView);
-        } catch (Exception e) {
-            Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
+        if (isInitialized()) {
+            try {
+                nodeMainExecutor.shutdownNodeMain(cameraExpressionRecognitionOriginView);
+                nodeMainExecutor.shutdownNodeMain(cameraExpressionRecognitionHandledView);
+                setInitialized(false);
+            } catch (Exception e) {
+                Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
+            }
         }
     }
 }

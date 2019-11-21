@@ -43,7 +43,6 @@ public abstract class RosFragment extends SimpleFragment {
     public void initialize(NodeMainExecutor nodeMainExecutor, NodeConfiguration nodeConfiguration) {
         this.nodeConfiguration = nodeConfiguration;
         this.nodeMainExecutor = nodeMainExecutor;
-        setInitialized(true);
     }
 
     /**

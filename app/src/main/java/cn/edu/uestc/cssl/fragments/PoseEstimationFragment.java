@@ -34,7 +34,7 @@ public class PoseEstimationFragment extends RosFragment {
     private static final String TAG = "PoseEstimationFragment";
 
     private RosImageView<sensor_msgs.CompressedImage> cameraPoseEstimationOriginView = null;
-    private RosImageView<sensor_msgs.Image> cameraPoseEstimationHandledView = null;
+    private RosImageView<sensor_msgs.CompressedImage> cameraPoseEstimationHandledView = null;
 
     public static PoseEstimationFragment newInstance() {
 
@@ -73,8 +73,8 @@ public class PoseEstimationFragment extends RosFragment {
             //处理后的图像
             cameraPoseEstimationHandledView = rootView.findViewById(R.id.camera_pose_estimation_handled);
             cameraPoseEstimationHandledView.setTopicName(getString(R.string.camera_topic_pose_estimation_handled));
-            cameraPoseEstimationHandledView.setMessageType(Image._TYPE);
-            cameraPoseEstimationHandledView.setMessageToBitmapCallable(new BitmapFromImage());
+            cameraPoseEstimationHandledView.setMessageType(CompressedImage._TYPE);
+            cameraPoseEstimationHandledView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
 
         }
     }

@@ -6,10 +6,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/camera_face_detection_origin" />
+        android:text="@string/camera_expression_recognition_origin" />
 
     <cn.edu.uestc.android_10.view.RosImageView
-        android:id="@+id/camera_face_detection_origin"
+        android:id="@+id/camera_expression_recognition_origin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

@@ -9,29 +9,38 @@
     <string name="topicName_of_add_face_for_face_recognition">/rosControl/fr/addFace</string>
     <string name="topicName_of_result_of_add_face_for_face_recognition">/rosControl/fr/addFaceResult</string>
     <string name="nodeName_of_add_face_for_face_recognition">addFaceNode</string>
+
+    <!--人脸检测-->
+    <!-- 处理前的视频图像 -->
+    <string name="camera_face_detection_origin">原始图像</string>
+    <string name="camera_topic_face_detection_origin">/camera/rgb/image_color/compressed</string>
+    <!-- 处理后的视频图像 -->
+    <string name="camera_face_detection_handled">人脸检测结果</string>
+    <string name="camera_topic_face_detection_handled">/webcam/image_raw</string>
+
+    <!--人脸识别-->
     <!-- 处理前的视频图像 -->
     <string name="camera_face_recognition_origin">原始图像</string>
     <string name="camera_topic_face_recognition_origin">/camera/rgb/image_color/compressed</string>
-
-    <!-- 处理前的视频图像 -->
-    <string name="camera_face_detection_handled">人脸识别结果</string>
-    <string name="camera_topic_face_detection_handled">/webcam/image_raw</string>
-    <!-- 处理后的视频图像 -->
     <string name="camera_face_recognition_handled">人脸识别结果</string>
     <string name="camera_topic_face_recognition_handled">/webcam/fr_image_raw</string>
+
+    <!--表情识别-->
     <!-- 处理前的视频图像 -->
-    <string name="camera_face_detection_origin">原始图像</string>
-    <string name="camera_topic_face_detection_origin">/webcam/image_raw</string>
+    <string name="camera_expression_recognition_origin">原始图像</string>
+    <string name="camera_topic_expression_recognition_origin">/webcam/image_raw</string>
     <!-- 处理后的视频图像 -->
     <string name="camera_expression_recognition_handled">情绪识别结果</string>
     <string name="camera_topic_expression_recognition_handled">/webcam/er_image_raw</string>
 
+    <!--骨骼识别-->
     <!-- 处理前的视频图像 -->
     <string name="camera_pose_estimation_origin">原始图像</string>
     <string name="camera_topic_pose_estimation_origin">/webcam/image_raw</string>
     <!-- 处理后的视频图像 -->
     <string name="camera_pose_estimation_handled">骨骼识别结果</string>
     <string name="camera_topic_pose_estimation_handled">/webcam/pe_image_raw</string>
+
     <!-- Robot chooser strings -->
     <string name="add_robot">添加机器人</string>
     <string name="edit_robot">编辑机器人</string>

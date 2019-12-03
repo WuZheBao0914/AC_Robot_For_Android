@@ -25,12 +25,11 @@ public class Listener extends AbstractNodeMain {
 
     public void onStart(ConnectedNode connectedNode) {
         final Log log = connectedNode.getLog();
-        Subscriber<std_msgs.String> subscriber = connectedNode.newSubscriber(this.nodeName, "std_msgs.String");
-        subscriber.addMessageListener(new MessageListener<std_msgs.String>() {
-            public void onNewMessage(std_msgs.String message) {
-                log.info("I heard: \"" + message.getData() + "\"");
-                messageReceiver.showMessage(message.getData());
-            }
+        Subscriber<std_msgs.String> subscriber = connectedNode.newSubscriber(this.topicName, std_msgs.String._TYPE);
+        subscriber.addMessageListener(message -> {
+            log.info("I heard: \"" + message.getData() + "\"");
+            messageReceiver.showMessage(message.getData());
+
         });
     }
 }

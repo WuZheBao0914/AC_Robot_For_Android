@@ -79,7 +79,7 @@ public class FaceRecognitionFragment extends RosFragment {
         if (cameraFaceRecognitionOriginView == null && cameraFaceRecognitionHandledView == null) {
             //未处理的图像
             cameraFaceRecognitionOriginView = rootView.findViewById(R.id.camera_face_recognition_origin);
-            cameraFaceRecognitionOriginView.setTopicName(getString(R.string.camera_topic_face_detection_origin));
+            cameraFaceRecognitionOriginView.setTopicName(getString(R.string.camera_topic_face_recognition_origin));
             cameraFaceRecognitionOriginView.setMessageType(CompressedImage._TYPE);
             cameraFaceRecognitionOriginView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
 

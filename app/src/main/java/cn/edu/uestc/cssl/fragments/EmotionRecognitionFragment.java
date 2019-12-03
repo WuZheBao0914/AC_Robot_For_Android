@@ -44,8 +44,8 @@ public class EmotionRecognitionFragment extends RosFragment {
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         if (cameraExpressionRecognitionOriginView == null && cameraExpressionRecognitionHandledView == null) {
             //未处理的图像
-            cameraExpressionRecognitionOriginView = rootView.findViewById(R.id.camera_face_detection_origin);
-            cameraExpressionRecognitionOriginView.setTopicName(getString(R.string.camera_topic_face_detection_origin));
+            cameraExpressionRecognitionOriginView = rootView.findViewById(R.id.camera_expression_recognition_origin);
+            cameraExpressionRecognitionOriginView.setTopicName(getString(R.string.camera_topic_expression_recognition_origin));
             cameraExpressionRecognitionOriginView.setMessageType(CompressedImage._TYPE);
             cameraExpressionRecognitionOriginView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
 

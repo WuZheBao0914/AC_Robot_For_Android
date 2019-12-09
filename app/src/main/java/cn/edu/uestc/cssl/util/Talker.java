@@ -1,25 +1,33 @@
 package cn.edu.uestc.cssl.util;
 
+import org.ros.internal.message.Message;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Publisher;
 
-public class Talker extends AbstractNodeMain {
+public class Talker<T extends Message> extends AbstractNodeMain {
 
     private String topicName;
     private String nodeName;
+    private String topicType;
+    private DataSetter<T> setter;
 
-    private static Publisher<std_msgs.String> publisher;
+
+    private Publisher<T> publisher;
 
     /**
      *
      * @param topicName
      * @param nodeName
+     * @param topicType
+     * @param setter
      */
-    public Talker(String topicName, String nodeName) {
+    public Talker(String topicName, String nodeName, String topicType, DataSetter<T> setter) {
         this.topicName = topicName;
         this.nodeName = nodeName;
+        this.topicType = topicType;
+        this.setter = setter;
     }
 
     @Override
@@ -30,12 +38,12 @@ public class Talker extends AbstractNodeMain {
     @Override
     public void onStart(ConnectedNode connectedNode) {
 
-        publisher = connectedNode.newPublisher(this.topicName, std_msgs.String._TYPE);
+        publisher = connectedNode.newPublisher(this.topicName, topicType);
     }
 
-    public void sendMessage(String msg) {
-        std_msgs.String str = publisher.newMessage();
-        str.setData(msg);
-        publisher.publish(str);
+    public void sendMessage(Object msg) {
+        T message = publisher.newMessage();
+        setter.setData(message, msg);
+        publisher.publish(message);
     }
 }

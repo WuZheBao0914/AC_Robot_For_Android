@@ -18,6 +18,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
 
     @SuppressWarnings("SpellCheckingInspection")
     private Unbinder mUnbinder = null;
+    protected boolean needSwipeBack = false;
 
     public abstract Object setLayout();
 
@@ -36,8 +37,13 @@ public abstract class BaseDelegate extends SwipeBackFragment {
             mUnbinder = ButterKnife.bind(this, rootView);
             onBindView(savedInstanceState, rootView);
         }
+        if (needSwipeBack){
+            return attachToSwipeBack(rootView);
+        }
+        else {
+            return rootView;
+        }
 
-        return attachToSwipeBack(rootView);
     }
 
     @Override

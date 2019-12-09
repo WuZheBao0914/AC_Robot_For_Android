@@ -12,6 +12,7 @@ import com.joanzapata.iconify.widget.IconButton;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
+import org.ros.internal.message.Message;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
 
@@ -20,6 +21,7 @@ import cn.edu.uestc.android_10.view.RosImageView;
 import cn.edu.uestc.cssl.activities.R;
 import cn.edu.uestc.cssl.activities.RobotController;
 import cn.edu.uestc.cssl.delegates.RosFragment;
+import cn.edu.uestc.cssl.util.DataSetter;
 import cn.edu.uestc.cssl.util.Listener;
 import cn.edu.uestc.cssl.util.MessageReceiver;
 import cn.edu.uestc.cssl.util.Talker;
@@ -29,7 +31,7 @@ import sensor_msgs.CompressedImage;
  * @author xuyang
  * @create 2019/1/23 16:01
  **/
-public class AddFaceForTrainingFragment extends RosFragment implements MessageReceiver {
+public class AddFaceForTrainingFragment extends RosFragment implements MessageReceiver, DataSetter<std_msgs.String> {
 
     private static final String TAG = "FaceForTrainingFragment";
     private View view;
@@ -77,7 +79,7 @@ public class AddFaceForTrainingFragment extends RosFragment implements MessageRe
             }
         });
         talker = new Talker(getString(R.string.topicName_of_add_face_for_face_recognition),
-                getString(R.string.nodeName_of_add_face_for_face_recognition));
+                getString(R.string.nodeName_of_add_face_for_face_recognition), std_msgs.String._TYPE,this);
         listener = new Listener(getString(R.string.topicName_of_result_of_add_face_for_face_recognition),
                 "addFaceResultNode", this);
         waitDialog = new QMUITipDialog.Builder(getControlApp())
@@ -132,5 +134,10 @@ public class AddFaceForTrainingFragment extends RosFragment implements MessageRe
             tipDialog.show();
             view.postDelayed(tipDialog::dismiss, 1500);
         }
+    }
+
+    @Override
+    public void setData(std_msgs.String msg, Object object) {
+        msg.setData((String) object);
     }
 }

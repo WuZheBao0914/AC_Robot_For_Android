@@ -58,10 +58,8 @@ public class FaceRecognitionFragment extends RosFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_face:
-                // todo 如何开启节点
-                AddFaceForTrainingFragment addFaceForTrainingFragment
-                        = AddFaceForTrainingFragment.newInstance();
-                start(addFaceForTrainingFragment);
+                start(AddFaceForTrainingFragment.newInstance());
+//                getSupportDelegate().startChild(addFaceForTrainingFragment);
 
                 break;
         }

@@ -17,7 +17,6 @@ public class Talker<T extends Message> extends AbstractNodeMain {
     private Publisher<T> publisher;
 
     /**
-     *
      * @param topicName
      * @param nodeName
      * @param topicType

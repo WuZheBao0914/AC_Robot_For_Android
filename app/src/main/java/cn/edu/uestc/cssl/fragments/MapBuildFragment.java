@@ -37,8 +37,7 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
     private TextView angleStateTextView;
     private TextView strenthStateTextView;
     private TextView directionStateTextView;
-    private TextView linearVelocityXTextView;
-    private TextView linearVelocityYTextView;
+    private TextView linearVelocityVerticalTextView;
     private TextView linearVelocityZTextView;
     private volatile Talker<Twist> talker;
 
@@ -114,8 +113,7 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
         angleStateTextView = rootView.findViewById(R.id.angleState);
         strenthStateTextView = rootView.findViewById(R.id.strenthState);
         directionStateTextView = rootView.findViewById(R.id.directionState);
-        linearVelocityXTextView = rootView.findViewById(R.id.linearVelocityX);
-        linearVelocityYTextView = rootView.findViewById(R.id.linearVelocityY);
+        linearVelocityVerticalTextView = rootView.findViewById(R.id.linearVelocityX);
         linearVelocityZTextView = rootView.findViewById(R.id.linearVelocityZ);
         talker = new Talker<>(getString(R.string.topicName_of_Joystick_Control), getString(R.string.nodeName_of_Joystick_Control), Twist._TYPE, this);
 
@@ -131,27 +129,24 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
                 double linearVelocityZ = -1 * normorlizedMagnitude * Math.sin((contactTheta + 90) * Math.PI / 180);
 
 
-                currentVelocityCommand = (Twist) talker.getPublisher().newMessage();
+                currentVelocityCommand = talker.getPublisher().newMessage();
                 angleStateTextView.setText("角度：" + contactTheta + "°");
                 strenthStateTextView.setText("距离：" + normorlizedMagnitude);
                 directionStateTextView.setText("方向：" + DIRECTION_STATE[joyStick.getDirection() + 1]);
 
                 switch (DIRECTION_STATE[joyStick.getDirection() + 1]) {
-                    case "CENTER":
-                        stop();
+                    case "UP": case "DOWN":case "LEFT_UP": case "LEFT_DOWN":case "RIGHT_UP": case "RIGHT_DOWN":
+                        linearVelocityVerticalTextView.setText("纵方向速度：" + linearVelocityY);
+                        linearVelocityZTextView.setText("角速度：" + 0);
+                        forceVelocity(linearVelocityY, 0, 0);
+                        break;
+                    case "LEFT": case "RIGHT":
+                        linearVelocityVerticalTextView.setText("纵方向速度：" + 0);
+                        linearVelocityZTextView.setText("角速度：" + linearVelocityZ);
+                        forceVelocity(0, 0, linearVelocityZ);
                         break;
                     default:
-                        if (normorlizedMagnitude >= 0.98) {//摇杆推到底才转向
-                            linearVelocityXTextView.setText("X方向速度：" + 0);
-                            linearVelocityYTextView.setText("Y方向速度：" + 0);
-                            linearVelocityZTextView.setText("角速度：" + linearVelocityZ);
-                            forceVelocity(0, 0, linearVelocityZ);
-                        } else {
-                            linearVelocityXTextView.setText("X方向速度：" + linearVelocityX);
-                            linearVelocityYTextView.setText("Y方向速度：" + linearVelocityY);
-                            linearVelocityZTextView.setText("角速度：" + 0);
-                            forceVelocity(linearVelocityX, linearVelocityY, 0);
-                        }
+                        stop();
                 }
             }
 

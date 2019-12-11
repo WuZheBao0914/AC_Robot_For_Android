@@ -13,10 +13,19 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.ros.message.MessageListener;
+import org.ros.namespace.GraphName;
+import org.ros.node.ConnectedNode;
+import org.ros.node.Node;
+import org.ros.node.NodeMain;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import cn.edu.uestc.cssl.activities.R;
 
 
-public class JoyStickView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+public class JoyStickView extends View implements GestureDetector.OnGestureListener{
 
     public static final int DIRECTION_CENTER = -1;
     public static final int DIRECTION_LEFT = 0;
@@ -66,6 +75,7 @@ public class JoyStickView extends View implements GestureDetector.OnGestureListe
     //Button Bitmap
     private Bitmap buttonBitmap = null;
 
+
     public interface JoyStickListener {
         void onMove(JoyStickView joyStick, double angle, double power, int direction);
 
@@ -89,7 +99,7 @@ public class JoyStickView extends View implements GestureDetector.OnGestureListe
 
         gestureDetector = new GestureDetector(context, this);
         gestureDetector.setIsLongpressEnabled(false);
-        gestureDetector.setOnDoubleTapListener(this);
+
 
         padColor = Color.WHITE;
         buttonColor = Color.RED;
@@ -233,22 +243,7 @@ public class JoyStickView extends View implements GestureDetector.OnGestureListe
         return false;
     }
 
-    @Override
-    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
-        if (listener != null) listener.onTap();
-        return false;
-    }
 
-    @Override
-    public boolean onDoubleTap(MotionEvent motionEvent) {
-        if (listener != null) listener.onDoubleTap();
-        return false;
-    }
-
-    @Override
-    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
-        return false;
-    }
 
     private static int calculateDirection(double degrees) {
         if ((degrees >= 0 && degrees < 22.5) || (degrees < 0 && degrees > -22.5)) {
@@ -337,4 +332,6 @@ public class JoyStickView extends View implements GestureDetector.OnGestureListe
     public void setType(int type) {
         this.type = type;
     }
+
+
 }

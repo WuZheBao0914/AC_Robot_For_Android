@@ -46,4 +46,8 @@ public class Talker<T extends Message> extends AbstractNodeMain {
         setter.setData(message, msg);
         publisher.publish(message);
     }
+
+    public Publisher<T> getPublisher(){
+        return publisher;
+    }
 }

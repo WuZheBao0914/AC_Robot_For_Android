@@ -41,6 +41,11 @@
     <string name="camera_pose_estimation_handled">骨骼识别结果</string>
     <string name="camera_topic_pose_estimation_handled">/webcam/pe_image_raw</string>
 
+    <!-- 地图构建 -->
+    <string name="topicName_of_Joystick_Control">/cmd_vel_mux/input/teleop</string>
+    <string name="nodeName_of_Joystick_Control">ControlByJoystickNode</string>
+
+
     <!-- Robot chooser strings -->
     <string name="add_robot">添加机器人</string>
     <string name="edit_robot">编辑机器人</string>

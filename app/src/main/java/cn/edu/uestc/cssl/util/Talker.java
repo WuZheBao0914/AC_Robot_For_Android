@@ -36,7 +36,6 @@ public class Talker<T extends Message> extends AbstractNodeMain {
 
     @Override
     public void onStart(ConnectedNode connectedNode) {
-
         publisher = connectedNode.newPublisher(this.topicName, topicType);
     }
 

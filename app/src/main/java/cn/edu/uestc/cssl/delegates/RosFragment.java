@@ -21,7 +21,7 @@ public abstract class RosFragment extends SimpleFragment {
     protected NodeConfiguration nodeConfiguration;
 
     // Whether this RosFragment's NodeMainExecutor has been started
-    private boolean initialized;
+    private boolean initialized = false;
 
     @Override
     public void onDestroyView() {

@@ -74,11 +74,11 @@ public class MainActivity extends SupportActivity implements
         // 加载机器人信息
         RobotStorage.load(this);
 
-        setContentView(R.layout.activity_robot_chooser);
+        setContentView(R.layout.activity_robot_chooser);//设置内容布局
 
 
         AcDelegate firstFragment = findFragment(RobotListFragment.class);
-        if (firstFragment == null) {
+        if (firstFragment == null) {//初始化碎片栈
             fragments[FIRST] = RobotListFragment.newInstance();
             fragments[SECOND] = HelpFragment.newInstance();
             fragments[THIRD] = AboutFragment.newInstance();

@@ -393,29 +393,5 @@ public class RobotController extends AppCompatRosActivity implements
 
     }
 
-    private Twist currentVelocityCommand;//保存当前发布到机器人的速度的命令
-    private Publisher<Twist> movePublisher;//命令队列
-    private Timer publisherTimer;//保存命令发布的时间
-    private boolean publishVelocity;//指示命令是否应该被发送
 
-    public void stopMove(){
-        publishVelocity= false;
-        publishVelocity(0.0,0.0,0.0);
-    }
-    public void publishVelocity(double linearVelocityX,double linearVelocityY, double angularVelocityZ){
-        if(currentVelocityCommand !=null){
-            currentVelocityCommand.getLinear().setX(linearVelocityX);
-            currentVelocityCommand.getLinear().setY(linearVelocityY);
-            currentVelocityCommand.getLinear().setZ(0.0);
-            currentVelocityCommand.getAngular().setX(0.0);
-            currentVelocityCommand.getAngular().setY(0.0);
-            currentVelocityCommand.getAngular().setZ(angularVelocityZ);;
-        }else {
-            Log.w("Emergency Stop", "currentVelocityCommand is null");
-        }
-    }
-    public void forceVelocity(double linearVelocityX,double linearVelocityY, double angularVelocityZ){
-        publishVelocity=true;
-        publishVelocity(linearVelocityX, linearVelocityY, angularVelocityZ);
-    }
 }

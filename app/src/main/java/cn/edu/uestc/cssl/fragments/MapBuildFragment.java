@@ -15,6 +15,8 @@ import org.ros.node.topic.Publisher;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.edu.uestc.android_10.BitmapFromCompressedImage;
+import cn.edu.uestc.android_10.view.RosImageView;
 import cn.edu.uestc.cssl.activities.R;
 import cn.edu.uestc.cssl.activities.RobotController;
 import cn.edu.uestc.cssl.delegates.RosFragment;
@@ -24,6 +26,7 @@ import cn.edu.uestc.cssl.util.Talker;
 import cn.edu.uestc.cssl.view.JoyStickView;
 import geometry_msgs.Twist;
 import geometry_msgs.Vector3;
+import sensor_msgs.CompressedImage;
 
 
 /*
@@ -40,6 +43,7 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
     private TextView linearVelocityVerticalTextView;
     private TextView linearVelocityZTextView;
     private volatile Talker<Twist> talker;
+    private RosImageView<CompressedImage> cameraView = null;
 
     private String[] DIRECTION_STATE = {"CENTER", "LEFT", "LEFT_UP", "UP", "RIGHT_UP", "RIGHT", "RIGHT_DOWN", "DOWN", "LEFT_DOWN"};
 
@@ -88,6 +92,7 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
         if (nodeConfiguration != null && !isInitialized()) {
             super.initialize(nodeMainExecutor, nodeConfiguration);
             nodeMainExecutor.execute(talker, nodeConfiguration.setNodeName(talker.getDefaultNodeName()));
+            nodeMainExecutor.execute(cameraView, nodeConfiguration.setNodeName(getString(R.string.nodeName_of_KinectCamera)));
             setInitialized(true);
         }
     }
@@ -115,8 +120,15 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
         directionStateTextView = rootView.findViewById(R.id.directionState);
         linearVelocityVerticalTextView = rootView.findViewById(R.id.linearVelocityX);
         linearVelocityZTextView = rootView.findViewById(R.id.linearVelocityZ);
+
         talker = new Talker<>(getString(R.string.topicName_of_Joystick_Control), getString(R.string.nodeName_of_Joystick_Control), Twist._TYPE, this);
 
+        if(cameraView == null){
+            cameraView = rootView.findViewById(R.id.cameraview);
+            cameraView.setTopicName(getString(R.string.topicName_of_KinectCamera));
+            cameraView.setMessageType(CompressedImage._TYPE);
+            cameraView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+        }
 
         joyStickView.setListener(new JoyStickView.JoyStickListener() {
             @Override
@@ -130,8 +142,6 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
 
 
                 currentVelocityCommand = talker.getPublisher().newMessage();
-                angleStateTextView.setText("角度：" + contactTheta + "°");
-                strenthStateTextView.setText("距离：" + normorlizedMagnitude);
                 directionStateTextView.setText("方向：" + DIRECTION_STATE[joyStick.getDirection() + 1]);
 
                 switch (DIRECTION_STATE[joyStick.getDirection() + 1]) {
@@ -193,6 +203,7 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
         if (isInitialized()) {
             try {
                 nodeMainExecutor.shutdownNodeMain(talker);
+                nodeMainExecutor.shutdownNodeMain(cameraView);
                 setInitialized(false);
             } catch (Exception e) {
                 Log.e(TAG, "nodeMainExecutor为空，shutdown失败");

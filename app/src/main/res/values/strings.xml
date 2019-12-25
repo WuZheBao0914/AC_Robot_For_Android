@@ -43,7 +43,9 @@
 
     <!-- 地图构建 -->
     <string name="topicName_of_Joystick_Control">/cmd_vel_mux/input/teleop</string>
+    <string name="topicName_of_KinectCamera">/camera/rgb/image_color/compressed</string>
     <string name="nodeName_of_Joystick_Control">ControlByJoystickNode</string>
+    <string name="nodeName_of_KinectCamera">KinectCameraNode</string>
 
 
     <!-- Robot chooser strings -->

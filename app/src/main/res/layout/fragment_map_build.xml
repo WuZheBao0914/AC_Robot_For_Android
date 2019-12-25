@@ -3,10 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <cn.edu.uestc.android_10.view.RosImageView
+        android:id="@+id/cameraview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1" />
     <cn.edu.uestc.cssl.view.JoyStickView
         android:id="@+id/joystick"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         app:buttonColor="#ACACAC"
         app:padColor="#636363" />
     <TextView

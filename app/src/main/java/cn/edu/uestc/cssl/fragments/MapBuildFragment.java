@@ -156,7 +156,7 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
                         forceVelocity(0, 0, linearVelocityZ);
                         break;
                     case "LEFT_UP": case "LEFT_DOWN":case "RIGHT_UP": case "RIGHT_DOWN":
-                        linearVelocityVerticalTextView.setText("纵方向速度：" + 0);
+                        linearVelocityVerticalTextView.setText("纵方向速度：" + linearVelocityY);
                         linearVelocityZTextView.setText("角速度：" + linearVelocityZ);
                         forceVelocity(linearVelocityY, 0, linearVelocityZ);
                         break;

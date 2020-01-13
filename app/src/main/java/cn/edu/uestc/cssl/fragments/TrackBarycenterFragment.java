@@ -2,17 +2,39 @@ package cn.edu.uestc.cssl.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
+import org.ros.node.NodeConfiguration;
+import org.ros.node.NodeMainExecutor;
+
+import cn.edu.uestc.android_10.BitmapFromCompressedImage;
+import cn.edu.uestc.android_10.view.RosImageView;
 import cn.edu.uestc.cssl.activities.R;
+import cn.edu.uestc.cssl.activities.RobotController;
 import cn.edu.uestc.cssl.delegates.RosFragment;
+import cn.edu.uestc.cssl.util.DataSetter;
+import cn.edu.uestc.cssl.util.Talker;
+import geometry_msgs.Twist;
+import sensor_msgs.CompressedImage;
+import std_msgs.String;
 
 /*
  *@author xuyang
  *@createTime 2019/2/17 14:46
  *@description 质心追踪Fragment
  */
-public class TrackBarycenterFragment extends RosFragment {
+public class TrackBarycenterFragment extends RosFragment implements DataSetter<String> {
+
+    private static final java.lang.String TAG = "TrackBarycenterFragment";
+
+
+//    private RosImageView<CompressedImage> cameraView = null;
+    private Button startTrackButton;
+    private Button stopTrackButton;
+    private Talker<String> talker;
+    private java.lang.String commandString;
 
     public static TrackBarycenterFragment newInstance() {
 
@@ -29,12 +51,66 @@ public class TrackBarycenterFragment extends RosFragment {
     }
 
     @Override
+    public void initialize(NodeMainExecutor nodeMainExecutor, NodeConfiguration nodeConfiguration) {
+        if (nodeConfiguration != null && !isInitialized()) {
+            super.initialize(nodeMainExecutor, nodeConfiguration);
+            nodeMainExecutor.execute(talker, nodeConfiguration.setNodeName(talker.getDefaultNodeName()));
+//            nodeMainExecutor.execute(cameraView, nodeConfiguration.setNodeName(getString(R.string.nodeName_of_KinectCamera)));
+            setInitialized(true);
+        }
+    }
+
+    @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        startTrackButton = rootView.findViewById(R.id.start_track_button);
+//        cameraView = rootView.findViewById(R.id.cameraview);
+        stopTrackButton = rootView.findViewById(R.id.stop_track_button);
+        talker = new Talker<>(getString(R.string.topicName_of_TrackBartcenter), getString(R.string.nodeName_of_TrackBartcenter), String._TYPE, this);
+
+//        if(cameraView == null){
+//            cameraView = rootView.findViewById(R.id.cameraview);
+//            cameraView.setTopicName(getString(R.string.topicName_of_KinectCamera));
+//            cameraView.setMessageType(CompressedImage._TYPE);
+//            cameraView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+//        }
+
+
+
+        stopTrackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commandString = "stop";
+                talker.sendMessage(commandString);
+            }
+        });
+
+        startTrackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commandString = "start";
+                talker.sendMessage(commandString);
+            }
+        });
+
+        RobotController.initFragment(this);
 
     }
 
     @Override
     public void shutdown() {
+        if (isInitialized()) {
+            try {
+                nodeMainExecutor.shutdownNodeMain(talker);
+//                nodeMainExecutor.shutdownNodeMain(cameraView);
+                setInitialized(false);
+            } catch (Exception e) {
+                Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
+            }
+        }
+    }
 
+    @Override
+    public void setData(String msg, Object object) {
+        msg.setData((java.lang.String) object);
     }
 }

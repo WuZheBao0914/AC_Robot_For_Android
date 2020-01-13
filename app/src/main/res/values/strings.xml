@@ -46,7 +46,9 @@
     <string name="topicName_of_KinectCamera">/camera/rgb/image_color/compressed</string>
     <string name="nodeName_of_Joystick_Control">ControlByJoystickNode</string>
     <string name="nodeName_of_KinectCamera">KinectCameraNode</string>
-
+    <!--质心追踪 -->
+    <string name="topicName_of_TrackBartcenter">remote_follower_topic</string>
+    <string name="nodeName_of_TrackBartcenter">remoteFollowerNode</string>
 
     <!-- Robot chooser strings -->
     <string name="add_robot">添加机器人</string>

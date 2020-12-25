@@ -27,6 +27,12 @@
         android:showAsAction="withText|ifRoom"
         android:title="@string/action_pose"
         tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/action_object_tracking"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_object_tracking"
+        tools:ignore="AppCompatResource" />
+
     <item android:title="@string/action_face">
         <menu>
             <item

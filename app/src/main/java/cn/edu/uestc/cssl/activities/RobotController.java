@@ -37,6 +37,7 @@ import cn.edu.uestc.cssl.fragments.EmotionRecognitionFragment;
 import cn.edu.uestc.cssl.fragments.FaceDetectionFragment;
 import cn.edu.uestc.cssl.fragments.FaceRecognitionFragment;
 import cn.edu.uestc.cssl.fragments.MapBuildFragment;
+import cn.edu.uestc.cssl.fragments.ObjectTrackingFragment;
 import cn.edu.uestc.cssl.fragments.PoseEstimationFragment;
 import cn.edu.uestc.cssl.fragments.SettingFragment;
 import cn.edu.uestc.cssl.fragments.TrackBarycenterFragment;
@@ -82,7 +83,8 @@ public class RobotController extends AppCompatRosActivity implements
     public static final int EIGHTH = 7;
     public static final int NINTH = 8;
     public static final int TENTH = 9;
-    private RosFragment[] fragments = new RosFragment[10];
+    public static final int ELEVENTH = 10;
+    private RosFragment[] fragments = new RosFragment[11];
     private RosFragment fragment = null;
 
 
@@ -161,6 +163,7 @@ public class RobotController extends AppCompatRosActivity implements
             fragments[EIGHTH] = TrackBarycenterFragment.newInstance();
             fragments[NINTH] = TrackBonesFragment.newInstance();
             fragments[TENTH] = SettingFragment.newInstance();
+            fragments[ELEVENTH] = ObjectTrackingFragment.newInstance();
 
             loadMultipleRootFragment(R.id.container, FIRST,
                     fragments[FIRST],
@@ -172,7 +175,8 @@ public class RobotController extends AppCompatRosActivity implements
                     fragments[SEVENTH],
                     fragments[EIGHTH],
                     fragments[NINTH],
-                    fragments[TENTH]);
+                    fragments[TENTH],
+                    fragments[ELEVENTH]);
             fragment = fragments[FIRST];
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
@@ -188,6 +192,7 @@ public class RobotController extends AppCompatRosActivity implements
             fragments[EIGHTH] = TrackBarycenterFragment.newInstance();
             fragments[NINTH] = TrackBonesFragment.newInstance();
             fragments[TENTH] = SettingFragment.newInstance();
+            fragments[ELEVENTH] = ObjectTrackingFragment.newInstance();
         }
 
 
@@ -262,6 +267,10 @@ public class RobotController extends AppCompatRosActivity implements
                 new IconDrawable(this, AcIcons.icon_track_bones)
                         .color(Color.BLACK)
                         .actionBarSize());
+        mNavigationView.getMenu().findItem(R.id.action_object_tracking).setIcon(
+                new IconDrawable(this, AcIcons.icon_object_track)
+                        .color(Color.BLACK)
+                        .actionBarSize());
 
         LinearLayout llNavHeader = (LinearLayout) mNavigationView.getHeaderView(0);
 
@@ -297,7 +306,9 @@ public class RobotController extends AppCompatRosActivity implements
         mDrawer.closeDrawers();
 
         switch (item.getItemId()) {
-
+            case R.id.action_object_tracking:
+                skip(ELEVENTH, R.string.action_object_tracking);
+                break;
             case R.id.action_map:
                 skip(SECOND, R.string.action_map);
                 break;

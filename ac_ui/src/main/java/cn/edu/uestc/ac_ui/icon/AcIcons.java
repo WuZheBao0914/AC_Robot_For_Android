@@ -24,7 +24,8 @@ public enum AcIcons implements Icon {
     icon_about('\ue60f'),
     icon_add('\ue620'),
     icon_help('\ue600'),
-    icon_pose('\ue6c1');
+    icon_pose('\ue6c1'),
+    icon_object_track('\u2bd0');
 
     private char character;
 

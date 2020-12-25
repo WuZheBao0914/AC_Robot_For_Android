@@ -1,4 +1,4 @@
-<resources>
+<resources tools:ignore="ExtraTranslation" xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">看护机器人</string>
     <string name="noCamera">No Camera</string>
     <string name="prefs_camera_topic_edittext_key">prefs_camera_topic_edittext</string>
@@ -49,7 +49,9 @@
     <!--质心追踪 -->
     <string name="topicName_of_TrackBartcenter">remote_follower_topic</string>
     <string name="nodeName_of_TrackBartcenter">remoteFollowerNode</string>
-
+    <!--目标检测 -->
+    <string name="topicName_of_ObjectDetection_Origin">webcam/src_image_raw</string>
+    <string name="topicName_of_ObjectDetection_Handled">webcam/od_image_raw</string>
     <!-- Robot chooser strings -->
     <string name="add_robot">添加机器人</string>
     <string name="edit_robot">编辑机器人</string>
@@ -156,6 +158,7 @@
     <string name="action_voice">语音识别</string>
     <string name="action_pose">姿态估计</string>
     <string name="action_system">系统</string>
+    <string name="action_object_tracking">目标跟踪</string>
 
 
     <string name="action_choose_robot">选择机器人</string>

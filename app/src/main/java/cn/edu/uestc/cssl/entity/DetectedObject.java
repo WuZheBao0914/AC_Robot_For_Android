@@ -5,13 +5,13 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 public class DetectedObject {
     @JSONField(name = "x1")
-    private int x1;
+    private double x1;
     @JSONField(name = "y1")
-    private int y1;
+    private double y1;
     @JSONField(name = "x2")
-    private int x2;
+    private double x2;
     @JSONField(name = "y2")
-    private int y2;
+    private double y2;
     @JSONField(name = "conf")
     private double conf;
     @JSONField(name = "cls_conf")
@@ -43,7 +43,7 @@ public class DetectedObject {
 
     }
 
-    public int getX1() {
+    public double getX1() {
         return x1;
     }
 
@@ -51,7 +51,7 @@ public class DetectedObject {
         this.x1 = x1;
     }
 
-    public int getY1() {
+    public double getY1() {
         return y1;
     }
 
@@ -59,7 +59,7 @@ public class DetectedObject {
         this.y1 = y1;
     }
 
-    public int getX2() {
+    public double getX2() {
         return x2;
     }
 
@@ -67,7 +67,7 @@ public class DetectedObject {
         this.x2 = x2;
     }
 
-    public int getY2() {
+    public double getY2() {
         return y2;
     }
 

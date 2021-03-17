@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "cn.edu.uestc.cssl.activities"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    packagingOptions {
+        exclude 'META-INF/license/LICENSE.log4j.txt'
+        exclude 'META-INF/jboss-beans.xml'
+        exclude 'META-INF/license/LICENSE.protobuf.txt'
+        exclude 'META-INF/license/LICENSE.jsr166y.txt'
+        exclude 'META-INF/license/LICENSE.felix.txt'
+        exclude 'META-INF/license/LICENSE.jboss-logging.txt'
+        exclude 'META-INF/license/LICENSE.commons-logging.txt'
+        exclude 'META-INF/license/LICENSE.base64.txt'
+        exclude 'META-INF/license/LICENSE.jzlib.txt'
+        exclude 'META-INF/license/LICENSE.slf4j.txt'
+        exclude 'org/jboss/netty/container/spring/beans.xml'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+dependencies {
+    api project(':android_10')
+    compile 'com.google.code.gson:gson:2.8.1'
+}
+dependencies {
+    implementation 'com.alibaba:fastjson:1.2.73'
+}
+
+

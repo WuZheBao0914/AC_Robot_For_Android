@@ -79,7 +79,7 @@ public class AddFaceForTrainingFragment extends RosFragment implements MessageRe
             }
         });
         talker = new Talker<>(getString(R.string.topicName_of_add_face_for_face_recognition),
-                getString(R.string.nodeName_of_add_face_for_face_recognition), std_msgs.String._TYPE, this);
+                getString(R.string.nodeName_of_add_face_for_face_recognition), std_msgs.String._TYPE,this);
         listener = new Listener(getString(R.string.topicName_of_result_of_add_face_for_face_recognition),
                 "addFaceResultNode", this);
         waitDialog = new QMUITipDialog.Builder(getControlApp())

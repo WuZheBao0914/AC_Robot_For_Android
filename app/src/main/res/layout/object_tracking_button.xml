@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/button_back"
+    style="@style/ButtonBase.Compat"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="30dp"
+    android:background="#85C8E6"
+    android:text="Button"
+    android:textColor="#FFFFFF"
+    android:textSize="18sp"></Button>
+

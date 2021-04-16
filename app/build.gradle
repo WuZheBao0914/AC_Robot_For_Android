@@ -41,6 +41,7 @@ dependencies {
 }
 dependencies {
     implementation 'com.alibaba:fastjson:1.2.73'
+    implementation 'com.carlos.voiceline:mylibrary:1.0.6'
 }
 
 

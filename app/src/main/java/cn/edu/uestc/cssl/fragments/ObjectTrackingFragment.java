@@ -232,7 +232,6 @@ public class ObjectTrackingFragment extends RosFragment implements MessageReceiv
                                             obmp.compress(Bitmap.CompressFormat.PNG, 100, os);
                                             byte [] arr=os.toByteArray();
                                             String trackingResult=Base64.encodeToString(arr,Base64.NO_WRAP);
-                                            Log.i("base64",trackingResult);
 
                                             trackingMsg.add(x1);
                                             trackingMsg.add(y1);

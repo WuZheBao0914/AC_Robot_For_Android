@@ -45,6 +45,7 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
     private volatile Talker<Twist> talker;
     private RosImageView<CompressedImage> cameraView = null;
 
+
     private String[] DIRECTION_STATE = {"CENTER", "LEFT", "LEFT_UP", "UP", "RIGHT_UP", "RIGHT", "RIGHT_DOWN", "DOWN", "LEFT_DOWN"};
 
 
@@ -94,6 +95,7 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
             nodeMainExecutor.execute(talker, nodeConfiguration.setNodeName(talker.getDefaultNodeName()));
             nodeMainExecutor.execute(cameraView, nodeConfiguration.setNodeName(getString(R.string.nodeName_of_KinectCamera)));
             setInitialized(true);
+            //            nodeMainExecutor.execute(compressedImageView, nodeConfiguration.setNodeName("android/fragment_camera_view_after"));
         }
     }
 
@@ -125,10 +127,12 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
 
         if(cameraView == null){
             cameraView = rootView.findViewById(R.id.cameraview);
-            cameraView.setTopicName(getString(R.string.topicName_of_KinectCamera));
+            cameraView.setTopicName("webcam/od_image_raw");
             cameraView.setMessageType(CompressedImage._TYPE);
             cameraView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
         }
+
+
 
         joyStickView.setListener(new JoyStickView.JoyStickListener() {
             @Override

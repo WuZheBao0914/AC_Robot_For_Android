@@ -1,19 +1,33 @@
 package cn.edu.uestc.cssl.fragments;
 
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
-import org.ros.node.ConnectedNode;
+import org.ros.address.InetAddressFactory;
+import org.ros.android.view.visualization.layer.CameraControlListener;
+import org.ros.android.view.visualization.layer.LaserScanLayer;
+import org.ros.android.view.visualization.layer.Layer;
+import cn.edu.uestc.cssl.view.ViewControlLayer;
+
+import org.ros.android.view.visualization.layer.OccupancyGridLayer;
+import org.ros.android.view.visualization.layer.RobotLayer;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
-import org.ros.node.topic.Publisher;
+import org.ros.android.view.visualization.VisualizationView;
+import org.ros.time.NtpTimeProvider;
+import org.ros.time.TimeProvider;
+import org.ros.time.WallTimeProvider;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import cn.edu.uestc.android_10.BitmapFromCompressedImage;
 import cn.edu.uestc.android_10.view.RosImageView;
@@ -21,11 +35,9 @@ import cn.edu.uestc.cssl.activities.R;
 import cn.edu.uestc.cssl.activities.RobotController;
 import cn.edu.uestc.cssl.delegates.RosFragment;
 import cn.edu.uestc.cssl.util.DataSetter;
-import cn.edu.uestc.cssl.util.Listener;
 import cn.edu.uestc.cssl.util.Talker;
 import cn.edu.uestc.cssl.view.JoyStickView;
 import geometry_msgs.Twist;
-import geometry_msgs.Vector3;
 import sensor_msgs.CompressedImage;
 
 
@@ -37,14 +49,13 @@ import sensor_msgs.CompressedImage;
 public class MapBuildFragment extends RosFragment implements DataSetter<geometry_msgs.Twist> {
     private static final String TAG = "MapBuildFragment";
     private JoyStickView joyStickView;
-    private TextView angleStateTextView;
-    private TextView strenthStateTextView;
-    private TextView directionStateTextView;
-    private TextView linearVelocityVerticalTextView;
-    private TextView linearVelocityZTextView;
+    private VisualizationView mapView;//显示地图构建结果
+    private ViewGroup mainLayout;//主布局，即主要显示界面
+    private ViewGroup sideLayout;//边布局，即底边显示界面
     private volatile Talker<Twist> talker;
     private RosImageView<CompressedImage> cameraView = null;
-
+    private ViewControlLayer viewControlLayer;//控制布局类，负责切换主/次视图、缩放旋转平移等实际操作
+    private View rootView;//存储View内控件内容
 
     private String[] DIRECTION_STATE = {"CENTER", "LEFT", "LEFT_UP", "UP", "RIGHT_UP", "RIGHT", "RIGHT_DOWN", "DOWN", "LEFT_DOWN"};
 
@@ -57,6 +68,84 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
     // Contains the current velocity plan to be published
     private Twist currentVelocityCommand;
 
+
+
+    @Override
+    public void initialize(NodeMainExecutor nodeMainExecutor, NodeConfiguration nodeConfiguration) {//initialize后于onBindView执行
+        if (nodeConfiguration != null && !isInitialized()) {
+            super.initialize(nodeMainExecutor, nodeConfiguration);
+
+            precondition();//基本布局绑定 以及 回调函数设置
+            nodeMainExecutor.execute(talker, nodeConfiguration.setNodeName(talker.getDefaultNodeName()));
+            nodeMainExecutor.execute(mapView,nodeConfiguration.setNodeName("MapViewNode"));
+            nodeMainExecutor.execute(cameraView, nodeConfiguration.setNodeName(getString(R.string.nodeName_of_KinectCamera)));
+            setInitialized(true);
+        }
+    }
+
+    public static MapBuildFragment newInstance() {
+        Bundle args = new Bundle();
+        MapBuildFragment fragment = new MapBuildFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    @Override
+    public Object setLayout() {
+        return R.layout.fragment_map_build;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+
+        this.rootView = rootView;
+        if(cameraView == null){
+            cameraView = rootView.findViewById(R.id.cameraview);
+            cameraView.setTopicName("/camera/rgb/image_color/compressed");
+            cameraView.setMessageType(CompressedImage._TYPE);
+            cameraView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+        }
+        RobotController.initFragment(this);
+
+
+        publisherTimer = new Timer();
+        publisherTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (isInitialized() && talker.getPublisher() != null
+                        && currentVelocityCommand != null) {
+                    talker.sendMessage(currentVelocityCommand);
+                }
+            }
+        }, 0, 80);
+    }
+
+    @Override
+    public void setData(Twist msg, Object object) {
+        msg.setAngular(((Twist) object).getAngular());
+        msg.setLinear(((Twist) object).getLinear());
+    }
+
+    @Override
+    public void shutdown() {
+        if (isInitialized()) {
+            try {
+                nodeMainExecutor.shutdownNodeMain(talker);
+                nodeMainExecutor.shutdownNodeMain(cameraView);
+                nodeMainExecutor.shutdownNodeMain(mapView);
+                setInitialized(false);
+            } catch (Exception e) {
+                Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
+            }
+        }
+    }
 
     public void publishVelocity(double linearVelocityX, double linearVelocityY, double angularVelocityZ) {
         if (currentVelocityCommand != null) {
@@ -87,52 +176,29 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
         publishVelocity(linearVelocityX, linearVelocityY, angularVelocityZ);
     }
 
-
-    @Override
-    public void initialize(NodeMainExecutor nodeMainExecutor, NodeConfiguration nodeConfiguration) {
-        if (nodeConfiguration != null && !isInitialized()) {
-            super.initialize(nodeMainExecutor, nodeConfiguration);
-            nodeMainExecutor.execute(talker, nodeConfiguration.setNodeName(talker.getDefaultNodeName()));
-            nodeMainExecutor.execute(cameraView, nodeConfiguration.setNodeName(getString(R.string.nodeName_of_KinectCamera)));
-            setInitialized(true);
-            //            nodeMainExecutor.execute(compressedImageView, nodeConfiguration.setNodeName("android/fragment_camera_view_after"));
-        }
-    }
-
-    public static MapBuildFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        MapBuildFragment fragment = new MapBuildFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
-    @Override
-    public Object setLayout() {
-        return R.layout.fragment_map_build;
-    }
-
-    @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        joyStickView = rootView.findViewById(R.id.joystick);
-        angleStateTextView = rootView.findViewById(R.id.angleState);
-        strenthStateTextView = rootView.findViewById(R.id.strenthState);
-        directionStateTextView = rootView.findViewById(R.id.directionState);
-        linearVelocityVerticalTextView = rootView.findViewById(R.id.linearVelocityX);
-        linearVelocityZTextView = rootView.findViewById(R.id.linearVelocityZ);
-
+    public void precondition(){//预处理
         talker = new Talker<>(getString(R.string.topicName_of_Joystick_Control), getString(R.string.nodeName_of_Joystick_Control), Twist._TYPE, this);
 
-        if(cameraView == null){
-            cameraView = rootView.findViewById(R.id.cameraview);
-            cameraView.setTopicName("webcam/od_image_raw");
-            cameraView.setMessageType(CompressedImage._TYPE);
-            cameraView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
-        }
+        joyStickView = rootView.findViewById(R.id.joystick);
+        mainLayout = rootView.findViewById(R.id.map_build_main_layout);
+        sideLayout = rootView.findViewById(R.id.map_build_side_layout);
+        mapView = rootView.findViewById(R.id.visualizationView);
+
+        viewControlLayer = new ViewControlLayer(getContext(),nodeMainExecutor.getScheduledExecutorService(),cameraView,
+                mapView,mainLayout,sideLayout);
+        LaserScanLayer laserScanLayer = new LaserScanLayer("scan");
+        OccupancyGridLayer occupancyGridLayer = new OccupancyGridLayer("map");
+        RobotLayer robotLayer = new RobotLayer("map");
+
+        mapView.onCreate(new ArrayList<Layer>());
+        mapView.getCamera().jumpToFrame("map");
+        mapView.addLayer(viewControlLayer);
+        mapView.addLayer(occupancyGridLayer);
+        mapView.addLayer(robotLayer);
+        mapView.addLayer(laserScanLayer);
 
 
+        mapView.init(nodeMainExecutor);
 
         joyStickView.setListener(new JoyStickView.JoyStickListener() {
             @Override
@@ -146,27 +212,18 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
 
 
                 currentVelocityCommand = talker.getPublisher().newMessage();
-                directionStateTextView.setText("方向：" + DIRECTION_STATE[joyStick.getDirection() + 1]);
 
                 switch (DIRECTION_STATE[joyStick.getDirection() + 1]) {
                     case "UP": case "DOWN":
-                        linearVelocityVerticalTextView.setText("纵方向速度：" + linearVelocityY);
-                        linearVelocityZTextView.setText("角速度：" + 0);
                         forceVelocity(linearVelocityY, 0, 0);
                         break;
                     case "LEFT": case "RIGHT":
-                        linearVelocityVerticalTextView.setText("纵方向速度：" + 0);
-                        linearVelocityZTextView.setText("角速度：" + linearVelocityZ);
                         forceVelocity(0, 0, linearVelocityZ);
                         break;
                     case "LEFT_UP": case "LEFT_DOWN":case "RIGHT_UP": case "RIGHT_DOWN":
-                        linearVelocityVerticalTextView.setText("纵方向速度：" + linearVelocityY);
-                        linearVelocityZTextView.setText("角速度：" + linearVelocityZ);
                         forceVelocity(linearVelocityY, 0, linearVelocityZ);
                         break;
                     default:
-                        linearVelocityVerticalTextView.setText("纵方向速度：" + 0);
-                        linearVelocityZTextView.setText("角速度：" + 0);
                         stop();
                 }
             }
@@ -181,37 +238,5 @@ public class MapBuildFragment extends RosFragment implements DataSetter<geometry
 
             }
         });
-
-        RobotController.initFragment(this);
-
-        publisherTimer = new Timer();
-        publisherTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (isInitialized() && talker.getPublisher() != null
-                        && currentVelocityCommand != null) {
-                    talker.sendMessage(currentVelocityCommand);
-                }
-            }
-        }, 0, 80);
-    }
-
-    @Override
-    public void setData(Twist msg, Object object) {
-        msg.setAngular(((Twist) object).getAngular());
-        msg.setLinear(((Twist) object).getLinear());
-    }
-
-    @Override
-    public void shutdown() {
-        if (isInitialized()) {
-            try {
-                nodeMainExecutor.shutdownNodeMain(talker);
-                nodeMainExecutor.shutdownNodeMain(cameraView);
-                setInitialized(false);
-            } catch (Exception e) {
-                Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
-            }
-        }
     }
 }

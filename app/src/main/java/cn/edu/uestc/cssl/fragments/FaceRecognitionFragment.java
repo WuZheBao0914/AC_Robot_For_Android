@@ -58,7 +58,9 @@ public class FaceRecognitionFragment extends RosFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_face:
-                start(AddFaceForTrainingFragment.newInstance());
+                AddFaceForTrainingFragment addFaceForTrainingFragment = AddFaceForTrainingFragment.newInstance();
+                addFaceForTrainingFragment.set_Fragment(this);
+                start(addFaceForTrainingFragment);
 //                getSupportDelegate().startChild(addFaceForTrainingFragment);
 
                 break;

@@ -41,6 +41,20 @@
         android:text="{icon-acquisition} 采集人脸"
         android:textColor="@android:color/white"
         tools:ignore="HardcodedText" />
-
+    <TextView
+        android:id="@+id/add_face_result"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="添加结果:"></TextView>
+    <Button
+        android:id="@+id/btn_add_face_back"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="返回"
+        ></Button>
 
 </LinearLayout>

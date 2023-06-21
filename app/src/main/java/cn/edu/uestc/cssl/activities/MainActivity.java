@@ -2,6 +2,7 @@ package cn.edu.uestc.cssl.activities;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,11 +16,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.EntypoModule;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.joanzapata.iconify.fonts.MaterialCommunityModule;
 
 import cn.edu.uestc.ac_core.app.AcRobot;
 import cn.edu.uestc.ac_ui.icon.AcIcons;
@@ -36,6 +40,8 @@ import me.yokeyword.fragmentation.SupportHelper;
 @SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends SupportActivity implements
         NavigationView.OnNavigationItemSelectedListener, SensorEventListener {
+
+
 
     // Navigation drawer items  导航栏
     private Toolbar mToolbar;
@@ -70,6 +76,8 @@ public class MainActivity extends SupportActivity implements
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontACModule())
                 .withIcon(new FontACModule1())
+                .withIcon(new EntypoModule())
+                .withIcon(new MaterialCommunityModule())
                 .configure();
         // 加载机器人信息
         RobotStorage.load(this);
@@ -164,6 +172,8 @@ public class MainActivity extends SupportActivity implements
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
+
     }
 
     @Override
@@ -224,5 +234,16 @@ public class MainActivity extends SupportActivity implements
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("Log_MainActivity","onActivityResult");
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

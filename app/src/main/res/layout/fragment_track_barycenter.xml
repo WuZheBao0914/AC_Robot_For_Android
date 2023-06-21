@@ -9,16 +9,10 @@
         <!--android:layout_marginTop="10dp"-->
         <!--android:layout_weight="1"-->
         <!--android:padding="20dp" />-->
-    <Button
-        android:id="@+id/start_track_button"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:text="开始追踪！"
-        android:layout_gravity="center_horizontal"/>
-    <Button
-        android:id="@+id/stop_track_button"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:text="停止追踪！"
-        android:layout_gravity="center_horizontal"/>
+    <cn.edu.uestc.android_10.view.RosImageView
+        android:id="@+id/camera_rawimage_trackbarycenter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp" />
 </LinearLayout>

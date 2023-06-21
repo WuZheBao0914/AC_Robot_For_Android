@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
@@ -16,7 +15,6 @@ import cn.edu.uestc.cssl.activities.RobotController;
 import cn.edu.uestc.cssl.delegates.RosFragment;
 import cn.edu.uestc.cssl.util.DataSetter;
 import cn.edu.uestc.cssl.util.Talker;
-import geometry_msgs.Twist;
 import sensor_msgs.CompressedImage;
 import std_msgs.String;
 
@@ -30,9 +28,7 @@ public class TrackBarycenterFragment extends RosFragment implements DataSetter<S
     private static final java.lang.String TAG = "TrackBarycenterFragment";
 
 
-//    private RosImageView<CompressedImage> cameraView = null;
-    private Button startTrackButton;
-    private Button stopTrackButton;
+    private RosImageView<CompressedImage> cameraView = null;
     private Talker<String> talker;
     private java.lang.String commandString;
 
@@ -62,38 +58,16 @@ public class TrackBarycenterFragment extends RosFragment implements DataSetter<S
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        startTrackButton = rootView.findViewById(R.id.start_track_button);
-//        cameraView = rootView.findViewById(R.id.cameraview);
-        stopTrackButton = rootView.findViewById(R.id.stop_track_button);
+        cameraView = rootView.findViewById(R.id.camera_rawimage_trackbarycenter);
         talker = new Talker<>(getString(R.string.topicName_of_TrackBartcenter), getString(R.string.nodeName_of_TrackBartcenter), String._TYPE, this);
 
-//        if(cameraView == null){
-//            cameraView = rootView.findViewById(R.id.cameraview);
-//            cameraView.setTopicName(getString(R.string.topicName_of_KinectCamera));
-//            cameraView.setMessageType(CompressedImage._TYPE);
-//            cameraView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
-//        }
-
-
-
-        stopTrackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                commandString = "stop";
-                talker.sendMessage(commandString);
-            }
-        });
-
-        startTrackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                commandString = "start";
-                talker.sendMessage(commandString);
-            }
-        });
-
+        if(cameraView == null){
+            cameraView = rootView.findViewById(R.id.cameraview);
+            cameraView.setTopicName(getString(R.string.topicName_of_KinectCamera));
+            cameraView.setMessageType(CompressedImage._TYPE);
+            cameraView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+        }
         RobotController.initFragment(this);
-
     }
 
     @Override

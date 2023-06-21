@@ -32,7 +32,36 @@
         android:showAsAction="withText|ifRoom"
         android:title="@string/action_object_tracking"
         tools:ignore="AppCompatResource" />
-
+    <item
+        android:id="@+id/action_vital_sign"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_vital_sign"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/action_target_seeking"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_target_seeking"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/action_semantic_segmentation"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_semantic_segmentation"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/action_test_pose"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_test_pose"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/action_test_emotion"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_test_emotion"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/action_test_voice"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_test_voice"
+        tools:ignore="AppCompatResource" />
     <item android:title="@string/action_face">
         <menu>
             <item

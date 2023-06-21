@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -204,6 +203,7 @@ public class RobotInfoAdapter extends RecyclerView.Adapter<RobotInfoAdapter.View
                 default:
 
                     FragmentManager fragmentManager = activity.getFragmentManager();
+//                    activity.getSupportFragmentManager();
                     ConnectionProgressDialogFragment f = new ConnectionProgressDialogFragment(info);
                     f.show(fragmentManager, "ConnectionProgressDialog");
 
@@ -280,7 +280,9 @@ public class RobotInfoAdapter extends RecyclerView.Adapter<RobotInfoAdapter.View
 
         @Override
         public void onDestroy() {
-            thread.interrupt();
+            if(thread != null) {
+                thread.interrupt();
+            }
 
             super.onDestroy();
         }
@@ -306,7 +308,6 @@ public class RobotInfoAdapter extends RecyclerView.Adapter<RobotInfoAdapter.View
                         // !!!---- EVIL USE OF STATIC VARIABLE ----!! //
                         // Should not be doing this but there is no other way that I can see -Michael
                         RobotController.ROBOT_INFO = INFO;
-
                         dismiss();
 
                         activity.runOnUiThread(new Runnable() {

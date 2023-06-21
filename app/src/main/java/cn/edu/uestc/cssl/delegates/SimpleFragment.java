@@ -1,6 +1,7 @@
 package cn.edu.uestc.cssl.delegates;
 
 
+import android.util.Log;
 import android.widget.Toast;
 
 import cn.edu.uestc.cssl.activities.MainActivity;
@@ -45,8 +46,10 @@ public abstract class SimpleFragment extends AcDelegate {
      */
     public SupportActivity getControlApp() {
         if (getActivity() instanceof MainActivity) {
+            Log.i("TargetSeekingFragment","MainActivity");
             return (MainActivity) getActivity();
         } else if (getActivity() instanceof RobotController) {
+            Log.i("TargetSeekingFragment","RobotController");
             return (RobotController) getActivity();
         } else {
             return null;

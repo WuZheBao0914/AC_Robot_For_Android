@@ -19,7 +19,6 @@
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
-
         <FrameLayout
             android:id="@+id/robot_list_container"
             android:layout_width="match_parent"

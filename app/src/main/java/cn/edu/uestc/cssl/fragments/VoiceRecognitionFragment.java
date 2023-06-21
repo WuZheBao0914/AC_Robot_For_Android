@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.carlos.voiceline.mylibrary.VoiceLineView;
 
@@ -42,9 +43,10 @@ public class VoiceRecognitionFragment extends RosFragment implements Runnable,Me
     private boolean isAlive = true;
     private Button btn;
     private VoiceLineView voiceLineView;
+    private TextView recognitionResult;
     private File AudioFile;
     private Talker<std_msgs.String> talker; //发送json数据
-    private Listener AudioTextListener = null;//检测到物体信息的接收器
+    private Listener AudioTextListener = null;//语音识别结果的接收器
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -99,6 +101,7 @@ public class VoiceRecognitionFragment extends RosFragment implements Runnable,Me
         AudioTextListener = new Listener("topic_voice_recognition", "android/listener_audiotext_information",this);
         talker = new Talker<>("topic_rec_Voice","android/talker_audiofile_information",std_msgs.String._TYPE,this);
         btn = rootView.findViewById(R.id.RecordAudio_button);
+        recognitionResult = rootView.findViewById(R.id.recognition_result);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,8 +137,7 @@ public class VoiceRecognitionFragment extends RosFragment implements Runnable,Me
             mediaRecorder.start();
         }else{
             btn.setText("开始录制");
-            talker.sendMessage("123");
-//            encodeBase64File(AudioFile.getAbsolutePath())
+            talker.sendMessage(encodeBase64File(AudioFile.getAbsolutePath()));
             mediaRecorder.stop();
             mediaRecorder.release();
             mediaRecorder = null;
@@ -144,7 +146,7 @@ public class VoiceRecognitionFragment extends RosFragment implements Runnable,Me
     @Override
     public void onDestroy() {
         isAlive = false;
-        mediaRecorder.release();
+//        mediaRecorder.release();
         mediaRecorder = null;
         super.onDestroy();
     }
@@ -176,19 +178,15 @@ public class VoiceRecognitionFragment extends RosFragment implements Runnable,Me
 
     @Override
     public void showMessage(java.lang.String msg) {
-
+        recognitionResult.setText(msg);
     }
 
     public static java.lang.String encodeBase64File(java.lang.String path) throws Exception {
-        File file = new File(path);
+        File  file = new File(path);
         FileInputStream inputFile = new FileInputStream(file);
-        byte [] buffer = new byte [( int )file.length()];
+        byte[] buffer = new byte[(int)file.length()];
         inputFile.read(buffer);
         inputFile.close();
-        java.lang.String trackingResult=Base64.encodeToString(buffer,Base64.NO_WRAP);
-        return trackingResult;
+        return Base64.encodeToString(buffer,Base64.NO_WRAP);
     }
-
-
-
 }

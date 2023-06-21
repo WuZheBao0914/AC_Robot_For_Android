@@ -4,16 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 
-import org.ros.android.view.visualization.VisualizationView;
-import org.ros.android.view.visualization.layer.LaserScanLayer;
-import org.ros.android.view.visualization.layer.Layer;
-import org.ros.android.view.visualization.layer.OccupancyGridLayer;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,7 +20,6 @@ import cn.edu.uestc.cssl.delegates.RosFragment;
 import cn.edu.uestc.cssl.util.DataSetter;
 import cn.edu.uestc.cssl.util.Talker;
 import cn.edu.uestc.cssl.view.JoyStickView;
-import cn.edu.uestc.cssl.view.ViewControlLayer;
 import geometry_msgs.Twist;
 import sensor_msgs.CompressedImage;
 
@@ -35,16 +29,13 @@ import sensor_msgs.CompressedImage;
  *@createTime 2019/2/17 14:43
  *@description 地图构建Fragment
  */
-public class MapBuildFragment extends RosFragment implements DataSetter<Twist> {
-    private static final String TAG = "MapBuildFragment";
+public class SemanticSegmentationFragment extends RosFragment implements DataSetter<Twist> {
+    private static final String TAG = "SemanticSegmentationFragment";
     private JoyStickView joyStickView;
-    private VisualizationView mapView;//显示地图构建结果
-    private ViewGroup mainLayout;//主布局，即主要显示界面
-    private ViewGroup sideLayout;//边布局，即底边显示界面
     private volatile Talker<Twist> talker;
+    private Button btn_start_segmentation;
     private RosImageView<CompressedImage> cameraView = null;
-    private ViewControlLayer viewControlLayer;//控制布局类，负责切换主/次视图、缩放旋转平移等实际操作
-    private View rootView;//存储View内控件内容
+    private int mode;
 
     private String[] DIRECTION_STATE = {"CENTER", "LEFT", "LEFT_UP", "UP", "RIGHT_UP", "RIGHT", "RIGHT_DOWN", "DOWN", "LEFT_DOWN"};
 
@@ -64,17 +55,15 @@ public class MapBuildFragment extends RosFragment implements DataSetter<Twist> {
         if (nodeConfiguration != null && !isInitialized()) {
             super.initialize(nodeMainExecutor, nodeConfiguration);
 
-            precondition();//基本布局绑定 以及 回调函数设置
             nodeMainExecutor.execute(talker, nodeConfiguration.setNodeName(talker.getDefaultNodeName()));
-            nodeMainExecutor.execute(mapView,nodeConfiguration.setNodeName("MapViewNode"));
             nodeMainExecutor.execute(cameraView, nodeConfiguration.setNodeName(getString(R.string.nodeName_of_KinectCamera)));
             setInitialized(true);
         }
     }
 
-    public static MapBuildFragment newInstance() {
+    public static SemanticSegmentationFragment newInstance() {
         Bundle args = new Bundle();
-        MapBuildFragment fragment = new MapBuildFragment();
+        SemanticSegmentationFragment fragment = new SemanticSegmentationFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,27 +71,23 @@ public class MapBuildFragment extends RosFragment implements DataSetter<Twist> {
 
     @Override
     public Object setLayout() {
-        return R.layout.fragment_map_build;
+        return R.layout.fragment_semantic_segmentation;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mode = 0;
     }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
 
-        joyStickView = rootView.findViewById(R.id.joystick);
-        mainLayout = rootView.findViewById(R.id.map_build_main_layout);
-        sideLayout = rootView.findViewById(R.id.map_build_side_layout);
-        mapView = rootView.findViewById(R.id.visualizationView);//绑定控件
-        mapView.onCreate(new ArrayList<Layer>());
+        joyStickView = rootView.findViewById(R.id.ss_joystick);
+        btn_start_segmentation = (Button)rootView.findViewById(R.id.ss_btn_mission);
 
-        this.rootView = rootView;
         if(cameraView == null){
-            cameraView = rootView.findViewById(R.id.cameraview);
+            cameraView = rootView.findViewById(R.id.ss_cameraview);
             cameraView.setTopicName("/camera/rgb/image_color/compressed");
             cameraView.setMessageType(CompressedImage._TYPE);
             cameraView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
@@ -161,6 +146,19 @@ public class MapBuildFragment extends RosFragment implements DataSetter<Twist> {
 
             }
         });
+        btn_start_segmentation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mode == 0) {
+                    btn_start_segmentation.setText("停止分割");
+                    mode = 1;
+                }
+                else {
+                    btn_start_segmentation.setText("开始分割");
+                    mode = 0;
+                }
+            }
+        });
     }
 
     @Override
@@ -175,7 +173,6 @@ public class MapBuildFragment extends RosFragment implements DataSetter<Twist> {
             try {
                 nodeMainExecutor.shutdownNodeMain(talker);
                 nodeMainExecutor.shutdownNodeMain(cameraView);
-                nodeMainExecutor.shutdownNodeMain(mapView);
                 setInitialized(false);
             } catch (Exception e) {
                 Log.e(TAG, "nodeMainExecutor为空，shutdown失败");
@@ -212,20 +209,4 @@ public class MapBuildFragment extends RosFragment implements DataSetter<Twist> {
         publishVelocity(linearVelocityX, linearVelocityY, angularVelocityZ);
     }
 
-    public void precondition(){//预处理
-        viewControlLayer = new ViewControlLayer(getContext(),nodeMainExecutor.getScheduledExecutorService(),cameraView,
-                mapView,mainLayout,sideLayout);
-        LaserScanLayer laserScanLayer = new LaserScanLayer("scan");
-        OccupancyGridLayer occupancyGridLayer = new OccupancyGridLayer("map");
-//        RobotLayer robotLayer = new RobotLayer("map");
-        mapView.getCamera().jumpToFrame("map");
-        mapView.addLayer(viewControlLayer);
-        mapView.addLayer(occupancyGridLayer);
-//        mapView.addLayer(robotLayer);
-        mapView.addLayer(laserScanLayer);
-
-        mapView.init(nodeMainExecutor);//以上代码使得mapView可以建构地图，详情参考https://github.com/kubot080301/kubot_app
-
-
-    }
 }

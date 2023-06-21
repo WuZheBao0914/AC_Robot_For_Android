@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<resource xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path name="cache" path="Cache/" />
+    <external-path name="hm_DCIM" path="DCIM/Camera" />
+    <external-path name="face_image" path="faceimage/" />
+</resource>
+</PreferenceScreen>

@@ -2,9 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <android.support.percent.PercentRelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="150dp"
+        android:orientation="vertical"
+        android:background="@drawable/robot_overview">
+        <Switch
+            android:id="@+id/switch_ridar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_marginTopPercent="22%"
+            app:layout_marginLeftPercent="17%"
+            android:text="开关" />
+
+        <Switch
+            android:id="@+id/switch_rgbd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_marginTopPercent="44%"
+            app:layout_marginLeftPercent="16%"
+            android:text="开关" />
+
+        <Switch
+            android:id="@+id/switch_roscore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_marginTopPercent="64%"
+            app:layout_marginLeftPercent="17%"
+            android:text="开关" />
+
+        <Switch
+            android:id="@+id/switch_chassis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_marginTopPercent="84%"
+            app:layout_marginLeftPercent="17%"
+            android:text="开关" />
+    </android.support.percent.PercentRelativeLayout>
     <TextView
         android:text="这里是基础信息"
         android:layout_width="match_parent"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content" />
+
 </LinearLayout>

@@ -1,4 +1,4 @@
-<resources tools:ignore="ExtraTranslation" xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
     <string name="app_name">看护机器人</string>
     <string name="noCamera">No Camera</string>
     <string name="prefs_camera_topic_edittext_key">prefs_camera_topic_edittext</string>
@@ -156,10 +156,15 @@
     <string name="action_face_recognition">人脸识别</string>
     <string name="action_emotion">情绪识别</string>
     <string name="action_voice">语音识别</string>
-    <string name="action_pose">姿态估计</string>
+    <string name="action_pose">跌倒检测</string>
     <string name="action_system">系统</string>
     <string name="action_object_tracking">目标跟踪</string>
-
+    <string name="action_vital_sign">生命体征</string>
+    <string name="action_target_seeking">标的寻物</string>
+    <string name="action_semantic_segmentation">场景分割</string>
+    <string name="action_test_pose">姿态识别测试</string>
+    <string name="action_test_emotion">情绪识别测试</string>
+    <string name="action_test_voice">语音识别测试</string>
 
     <string name="action_choose_robot">选择机器人</string>
     <string name="action_help">帮助</string>
@@ -170,4 +175,19 @@
 
 
     <string name="press_again_exit">再按一次退出</string>
+
+    <string-array name="target_class">
+        <item>handbag</item>
+        <item>backpack</item>
+        <item>others</item>
+    </string-array>
+    <string-array name="target_database_voice">
+        <item>aidatatang_200zh</item>
+    </string-array>
+    <string-array name="target_database_pose">
+        <item>MPII</item>
+    </string-array>
+    <string-array name="target_database_emotion">
+        <item>fer2013数据集                                              </item>
+    </string-array>
 </resources>

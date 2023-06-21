@@ -1,83 +1,40 @@
 package cn.edu.uestc.cssl.fragments;
 
-import android.Manifest;
-import android.app.ActivityManager;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.hardware.Sensor;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.app.Activity;
-import android.util.Base64;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
-import org.ros.node.topic.Subscriber;
-import org.w3c.dom.Text;
-
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import cn.edu.uestc.android_10.BitmapFromCompressedImage;
 import cn.edu.uestc.android_10.view.RosImageView;
-import cn.edu.uestc.cssl.activities.MainActivity;
 import cn.edu.uestc.cssl.activities.R;
-import cn.edu.uestc.cssl.activities.RobotController;
 import cn.edu.uestc.cssl.delegates.RosFragment;
-import cn.edu.uestc.cssl.entity.TrackingObjectInfo;
-
-
 import cn.edu.uestc.cssl.entity.DetectedObject;
-import cn.edu.uestc.cssl.entity.TrakingObject;
-import cn.edu.uestc.cssl.util.Listener;
-import cn.edu.uestc.cssl.util.ListenerTest;
 import cn.edu.uestc.cssl.util.DataSetter;
-import cn.edu.uestc.cssl.util.Talker;
+import cn.edu.uestc.cssl.util.Listener;
 import cn.edu.uestc.cssl.util.MessageReceiver;
+import cn.edu.uestc.cssl.util.Talker;
 import sensor_msgs.CompressedImage;
-
-import com.alibaba.fastjson.JSON;
-import java.io.File;
-
-
 
 
 public class ObjectTrackingFragment extends RosFragment implements MessageReceiver,DataSetter<std_msgs.String>{
@@ -86,19 +43,14 @@ public class ObjectTrackingFragment extends RosFragment implements MessageReceiv
     private Listener objectInfoListener = null;//检测到物体信息的接收器
     private LinearLayout objectInfoGroup = null;//物体信息控件组
     private LinearLayout   buttonParent = null;//按钮父级
-//    private RosImageView<CompressedImage> cameraObjectDetectionHandledView = null;
     private TextView info = null;//提示文本框
     private List<CheckBox> checkBoxs = new ArrayList<CheckBox>();//单选框组列表
     private int modelSignal = 0;//模式信号
     private ArrayList<DetectedObject> detectedObjects = new  ArrayList<DetectedObject>();
-    private ArrayList<TrakingObject> trakingObjects = new  ArrayList<TrakingObject>();
     private Talker<std_msgs.String> talker; //发送json数据
-//    private TrakingObject central_x,central_y,size_height,size_width;
     private Map<String,float[]> trakingmap = new HashMap<String, float[]>();
-    private float central_x,central_y,size_height,size_width;//中心点以及矩形宽高
     ArrayList trackingMsg;//机器人目标跟踪需要的信息
     private float x1,x2,y1,y2;//左上角右下角对应的（x，y）坐标
-//    private ImageView test;
 
     @Override
     public void setData(std_msgs.String msg, Object object) {
@@ -146,7 +98,7 @@ public class ObjectTrackingFragment extends RosFragment implements MessageReceiv
         info.setTextSize(20);
         //物体信息接收器实例化，指定话题名、节点名
 
-        objectInfoListener = new Listener("topic_objects_information", "android/listener_object_information",this);
+        objectInfoListener = new Listener("topic_object_tracking_information", "android/listener_object_information",this);
         talker = new Talker<>("topic_objects_modelChg","android/talker_object_information",std_msgs.String._TYPE,this);
 
 
@@ -193,7 +145,6 @@ public class ObjectTrackingFragment extends RosFragment implements MessageReceiv
                     } else {//如果机器人捕捉到目标
                         detectedObjects = Json2List(msg);//将json字符串转换为DetectedObject的ArrayList
                         for (int i = 0; i < detectedObjects.size(); i++) {
-
                             CheckBox checkBox = (CheckBox) getLayoutInflater().inflate(R.layout.object_tracking_checkbox, null);
                             checkBox.setGravity(Gravity.CENTER_HORIZONTAL);
                             checkBox.setTextSize(20);
@@ -210,9 +161,6 @@ public class ObjectTrackingFragment extends RosFragment implements MessageReceiv
                                             x2=(float)(detectedObjects.get(i).getX2());
                                             y1=(float)(detectedObjects.get(i).getY1());
                                             y2=(float)(detectedObjects.get(i).getY2());
-//                                            central_y=(float)(detectedObjects.get(i).getY1()+detectedObjects.get(i).getY2())/2;
-//                                            size_width=(float)(detectedObjects.get(i).getX2()-detectedObjects.get(i).getX1());
-//                                            size_height=(float)(detectedObjects.get(i).getY2()-detectedObjects.get(i).getY1());
 
                                             float[] topleft;
                                             topleft = new float[]{x1,y1};
@@ -222,12 +170,9 @@ public class ObjectTrackingFragment extends RosFragment implements MessageReceiv
                                             trakingmap.put("topleft",topleft);
                                             trakingmap.put("bottomright",bottomright);
 
-                                            byte[] img_data;
                                             cameraObjectTrackingHandledView.setDrawingCacheEnabled(true);
                                             Bitmap obmp = Bitmap.createBitmap(cameraObjectTrackingHandledView.getDrawingCache());
-                                            //Bitmap obmp = cameraObjectTrackingHandledView.getDrawingCache();
-                                            //String btmp = BitMapToString(obmp);
-
+                                            cameraObjectTrackingHandledView.setDrawingCacheEnabled(Boolean.FALSE);
                                             final ByteArrayOutputStream os = new ByteArrayOutputStream();
                                             obmp.compress(Bitmap.CompressFormat.PNG, 100, os);
                                             byte [] arr=os.toByteArray();
@@ -243,6 +188,7 @@ public class ObjectTrackingFragment extends RosFragment implements MessageReceiv
                                             Gson gson = new Gson();
                                             String json = gson.toJson(trackingMsg);
                                             talker.sendMessage(json);
+                                            Log.i("ObjectTrackingFragment_",json);
 
                                             info.setText("当前选择跟踪物体"+checkBoxs.get(i).getText());//设置子控件显示的文本
                                             objectInfoGroup.removeAllViews();
@@ -267,7 +213,7 @@ public class ObjectTrackingFragment extends RosFragment implements MessageReceiv
                         View view = buttonParent.getChildAt(i);
                         if(view.getId()==R.id.button_back){
                              break;
-                        }
+                        } 
                     }
                     if(i==count){
                         createButton();
@@ -276,12 +222,16 @@ public class ObjectTrackingFragment extends RosFragment implements MessageReceiv
             }
         });
     }
+
+
     public ArrayList<DetectedObject> Json2List(String jsonStr) {
         Gson gson = new Gson();
         Type ListType = new TypeToken<ArrayList<DetectedObject>>(){}.getType();
         ArrayList<DetectedObject> objectList = gson.fromJson(jsonStr, ListType);
         return objectList;
     }
+
+
     public void createButton(){
         Button button = (Button) getLayoutInflater().inflate(R.layout.object_tracking_button, null);
         button.setGravity(Gravity.CENTER);
@@ -301,70 +251,6 @@ public class ObjectTrackingFragment extends RosFragment implements MessageReceiv
                 modelSignal=0;
             }
         });
-    }
-
-    public static void saveBitmapAsPng(Bitmap bmp,String path) {
-        try {
-            FileOutputStream out = new FileOutputStream(path);
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.flush();
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /*
-    private void saveBitmap(Bitmap bitmap,String bitName) throws IOException
-    {
-        File file = new File("/sdcard/DCIM/Camera/"+bitName);
-        if(file.exists()){
-            file.delete();
-        }
-        FileOutputStream out;
-        try{
-            out = new FileOutputStream(file);
-            if(bitmap.compress(Bitmap.CompressFormat.PNG, 90, out))
-            {
-                out.flush();
-                out.close();
-            }
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
-    */
-    /*
-    public String BitMapToString(Bitmap bitmap){
-        final Base64.Encoder encoder = Base64.getEncoder();
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] arr=baos.toByteArray();
-        String result=encoder.encodeToString(arr);
-        return result;
-    }
-   */
-    public static String convertArrayToString(String[] strArr) {
-        if (strArr == null || strArr.length == 0) {
-            return "";
-        }
-        String res = "";
-        for (int i = 0, len = strArr.length; i < len; i++) {
-            res += strArr[i];
-            if (i < len - 1) {
-                res += ",";
-            }
-        }
-        return res;
     }
 
 }

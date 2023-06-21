@@ -3,15 +3,88 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/drawable/background_splash.xml" value="0.23229166666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/drawable/boder.xml" value="0.23229166666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/activity_main.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/activity_robot_chooser.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/activity_robot_controller.xml" value="0.2359375" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/dialog_add_robot.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/dialog_select_image.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_about.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_add_face_for_training.xml" value="0.22708333333333333" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_base_infomation.xml" value="0.25" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_emotion_recognition.xml" value="0.22083333333333333" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_face_recognition.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_help_using.xml" value="0.2259963768115942" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_map_build.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_object_tracking.xml" value="0.22708333333333333" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_robot_list.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_system_setting.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_target_seeking.xml" value="0.21739130434782608" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_test.xml" value="0.33" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_track_barycenter.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_track_bones.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_vital_sign.xml" value="0.21739130434782608" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/fragment_voice_recognition.xml" value="0.21739130434782608" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/head_layout.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/nav_drawer_menu_item.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/object_tracking_button.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/object_tracking_checkbox.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/layout/robot_info_view.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/menu/menu_add_face_for_training.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/menu/menu_add_robot.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/menu/menu_robot_chooser.xml" value="0.25833333333333336" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android fortest/app/src/main/res/menu/menu_robot_controller.xml" value="0.2552083333333333" />
         <entry key="..\:/Android_project/AC_Robot_For_Android/app/control_app_lib/src/main/res/layout/main.xml" value="0.2694746376811594" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/drawable-hdpi/drawable_tracking.xml" value="0.22760416666666666" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/drawable-hdpi/left_blue.xml" value="0.3964102564102564" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/drawable-hdpi/left_green.xml" value="0.3964102564102564" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/drawable-hdpi/left_white.xml" value="0.3964102564102564" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/drawable-hdpi/left_yellow.xml" value="0.3964102564102564" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22760416666666666" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/drawable/background_splash.xml" value="0.22760416666666666" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/drawable/boder.xml" value="0.22760416666666666" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/drawable/grey_border.xml" value="0.24375" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22760416666666666" />
         <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout-normal/fragment_hud.xml" value="0.2265625" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout-normal/fragment_semantic_segmentation.xml" value="0.20677083333333332" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout-normal/fragment_vital_sign.xml" value="0.3188405797101449" />
         <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/actionbar_dropdown_menu.xml" value="0.2265625" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/activity_base_acitvity.xml" value="0.22760416666666666" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/activity_main.xml" value="0.21822916666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/activity_robot_chooser.xml" value="0.21822916666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/activity_robot_controller.xml" value="0.21822916666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/activity_test.xml" value="0.1921875" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/activity_test2.xml" value="0.21145833333333333" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/adfgadfg.xml" value="0.21822916666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/dialog_add_robot.xml" value="0.21822916666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/dialog_select_image.xml" value="0.2109375" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_about.xml" value="0.21822916666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_add_face_for_training.xml" value="0.21822916666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_base_infomation.xml" value="0.33" />
         <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_camera_view.xml" value="0.2265625" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_emotion_recognition.xml" value="0.21822916666666667" />
         <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_face_recognition.xml" value="0.21822916666666667" />
         <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_joystick_view.xml" value="0.21822916666666667" />
         <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_laser_scan.xml" value="0.25" />
         <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_map.xml" value="0.21822916666666667" />
-        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_map_build.xml" value="0.21822916666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_map_build.xml" value="0.25" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_object_tracking.xml" value="0.1" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_pose_estimation.xml" value="0.35643115942028986" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_robot_list.xml" value="0.22760416666666666" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_system_setting.xml" value="0.20677083333333332" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_target_seeking.xml" value="0.25" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_track_barycenter.xml" value="0.3188405797101449" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_track_bones.xml" value="0.3188405797101449" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_vital_sign.xml" value="0.25" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_vital_sign2.xml" value="0.21822916666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/fragment_voice_recognition.xml" value="0.3188405797101449" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/object_tracking_button.xml" value="0.20677083333333332" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/layout/object_tracking_checkbox.xml" value="0.20677083333333332" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/menu/menu_robot_controller.xml" value="0.21822916666666667" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22760416666666666" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22760416666666666" />
+        <entry key="..\:/Android_project/AC_Robot_For_Android/app/src/main/res/xml/file_provider.xml" value="0.22760416666666666" />
       </map>
     </option>
   </component>

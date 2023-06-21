@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#010101"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/graph_father1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#1a283b"
+        android:paddingLeft="5dp">
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart_BloodOxygen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/graph_father1_data" />
+
+        <TextView
+            android:id="@+id/graph_father1_left"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="3dip"
+            android:background="#1a283b"
+            android:drawableLeft="@drawable/left_blue"
+            android:drawablePadding="3dp"
+            android:text="血氧"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+
+
+        <RelativeLayout
+            android:id="@+id/graph_father1_data"
+            android:layout_width="150dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="#17232e">
+
+            <TextView
+                android:id="@+id/graph_father1_data_text_left"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:text="089"
+                android:textColor="#2bacf6"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/graph_father1_data_text_sub_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/graph_father1_data_text_left"
+                android:layout_toRightOf="@+id/graph_father1_data_text_left"
+                android:text="%"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/graph_father1_data2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="#17232e" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/graph_father2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dip"
+        android:layout_weight="1"
+        android:background="#1a283b"
+        android:paddingLeft="5dp">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart_HeartRatio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/graph_father2_data" />
+
+        <TextView
+            android:id="@+id/graph_father2_left"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="3dip"
+            android:background="#1a283b"
+            android:drawableLeft="@drawable/left_green"
+            android:drawablePadding="3dp"
+            android:text="心电"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/graph_father2_data"
+            android:layout_width="150dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="#17232e">
+            <Spinner
+                android:id="@+id/graph_father2_Ecg_Channel_Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:background="#1a283b"
+                android:textAlignment="center" />
+            <!--            android:entries="@array/EcgChanneSpingarr"-->
+
+
+            <TextView
+                android:id="@+id/graph_father2_data_text"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:text="067"
+                android:textColor="#00FF00"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/graph_father2_data_text_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/graph_father2_data_text"
+                android:layout_toRightOf="@+id/graph_father2_data_text"
+                android:text="HR"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/graph_father3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dip"
+        android:layout_weight="1"
+        android:background="#1a283b"
+        android:paddingLeft="5dp">
+
+
+
+        <RelativeLayout
+            android:id="@+id/graph_father3_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="#17232e">
+
+            <TextView
+                android:id="@+id/graph_father3_data_text"
+                android:layout_width="120dp"
+                android:layout_height="70dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="5dip"
+                android:gravity="center"
+                android:text="睡眠状态"
+                android:textColor="#ffe447"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/graph_father3_left"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="3dip"
+                android:layout_marginTop="3dip"
+                android:background="#1a283b"
+                android:drawableLeft="@drawable/left_yellow"
+                android:drawablePadding="3dp"
+                android:text="睡眠状态"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/graph_father4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dip"
+        android:layout_weight="1"
+        android:background="#1a283b"
+        android:paddingLeft="5dp"
+        >
+        <!--android:visibility="gone"-->
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart_BloodPressure"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/graph_father4_data" />
+
+        <TextView
+            android:id="@+id/graph_father4_left"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="3dip"
+            android:background="#1a283b"
+            android:drawableLeft="@drawable/left_white"
+            android:drawablePadding="3dp"
+            android:text="血压"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+
+
+        <RelativeLayout
+            android:id="@+id/graph_father4_data"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="#17232e">
+
+            <TextView
+                android:id="@+id/graph_father4_data_text"
+                android:layout_width="110dp"
+                android:layout_height="70dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="200/100"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/graph_father4_data_text_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_alignBaseline="@+id/graph_father4_data_text"
+                android:layout_toRightOf="@+id/graph_father4_data_text"
+                android:text="mmHg"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/graph_father4_data_ctl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:background="#1a283b" />
+            <!--                android:entries="@array/NibpCtlSpingarr" />-->
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/graph_father5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dip"
+        android:layout_weight="1"
+        android:background="#1a283b"
+        android:paddingLeft="5dp"
+        >
+        <!--android:visibility="gone"-->
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart_Temprature"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/graph_father5_data" />
+
+        <TextView
+            android:id="@+id/graph_father5_left"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="3dip"
+            android:background="#1a283b"
+            android:drawableLeft="@drawable/left_white"
+            android:drawablePadding="3dp"
+            android:text="体温"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+
+        <RelativeLayout
+            android:id="@+id/graph_father5_data"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="#17232e">
+
+            <TextView
+                android:id="@+id/graph_father5_data_text"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:text="30"
+                android:textColor="@color/pink"
+                android:textSize="27sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/graph_father5_data_text_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/graph_father5_data_text"
+                android:layout_centerVertical="true"
+                android:text="℃"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+            <Spinner
+                android:id="@+id/graph_father5_data_ctl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:background="#1a283b" />
+            <!--                android:entries="@array/NibpCtlSpingarr" />-->
+
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ss_build_main_layout">
+    <cn.edu.uestc.android_10.view.RosImageView
+        android:id="@+id/ss_cameraview"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:padding="0dp"
+        android:layout_weight="1"
+        />
+    <LinearLayout android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/ss_build_side_layout">
+        <cn.edu.uestc.cssl.view.JoyStickView
+            android:id="@+id/ss_joystick"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:background="#75AAA5"
+            app:buttonColor="#ACACAC"
+            app:padColor="#636363" />
+        <Button
+            android:id="@+id/ss_btn_mission"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="开始分割"
+            android:background="#85C8E6"
+            android:textColor="#FFFFFF"></Button>
+    </LinearLayout>
+</LinearLayout>
